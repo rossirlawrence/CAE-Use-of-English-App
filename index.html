@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>C1 Advanced — Use of English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#0d0f1a;--s1:#13152a;--bd:#1e2235;--tx:#eeeef5;--dim:rgba(238,238,245,.38);--dimmer:rgba(238,238,245,.18);--p1:#f59e0b;--p2:#34d399;--p3:#818cf8;--p4:#fb7185;--p5:#06b6d4;--p6:#8b5cf6;--p7:#f97316;--green:#34d399;--red:#fb7185;--amber:#f59e0b;--blue:#6c8ebf}
+.light{--bg:#f5f4f0;--s1:#ffffff;--bd:#dddbd4;--tx:#1a1a18;--dim:rgba(26,26,24,.65);--dimmer:rgba(26,26,24,.45);--p1:#b8860b;--p2:#1a7a50;--p3:#4c3fbf;--p4:#b5253a;--p5:#0891b2;--p6:#6d28d9;--p7:#c2410c;--green:#1a7a50;--red:#b5253a;--amber:#b8860b;--blue:#2a5a9f}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif}
+input,button{font-family:inherit}
+input:focus{outline:none}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:#2a2d3e;border-radius:2px}
+.scr{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;transform:translateY(12px);overflow:hidden}
+.scr.on{opacity:1;pointer-events:all;transform:none}
+#s-home{overflow-y:auto}
+.home-pad{padding:44px 20px 20px}
+.eyebrow{font-family:'DM Mono',monospace;font-size:10px;color:var(--p1);letter-spacing:.14em;margin-bottom:10px}
+.h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.9rem,8vw,2.8rem);line-height:1.1;margin-bottom:6px}
+.sub{color:var(--dim);font-size:.88rem;font-weight:300;margin-bottom:36px}
+.tiles{padding:0 16px 48px;display:flex;flex-direction:column;gap:11px}
+.tile{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background .12s,border-color .12s,transform .12s;text-align:left;width:100%;-webkit-appearance:none}
+.tile:active{transform:scale(.97);background:#1a1d2e}
+.tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;margin-bottom:5px}
+.tname{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;color:var(--tx);margin-bottom:2px}
+.tsub{font-size:.76rem;color:var(--dimmer);font-weight:300}
+.tile-r{display:flex;flex-direction:column;align-items:flex-end;gap:5px;margin-left:10px}
+.bbadge{font-family:'DM Mono',monospace;font-size:11px;border-radius:6px;padding:3px 8px}
+.arrow{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.15rem;line-height:1;flex-shrink:0}
+#s-setup{overflow-y:auto;padding:0 20px 48px}
+.setup-head{padding:36px 0 18px;display:flex;align-items:center;gap:12px}
+.bk{background:none;border:none;color:var(--dimmer);font-size:1.5rem;padding:4px 8px;cursor:pointer;line-height:1}
+.setup-head h2{font-family:'Syne',sans-serif;font-weight:700;font-size:1.35rem}
+.p4note{color:var(--dim);font-size:.83rem;margin-bottom:22px;line-height:1.7;font-weight:300;background:rgba(251,113,133,.06);border:1px solid rgba(251,113,133,.2);border-radius:10px;padding:12px 15px}
+.p4note strong{color:var(--red)}
+.cnt-btns{display:flex;flex-direction:column;gap:10px}
+.cnt-btn{border-radius:12px;padding:17px 20px;font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;text-align:left;cursor:pointer;transition:background .1s,color .1s,transform .1s;border:1.5px solid transparent;-webkit-appearance:none}
+.cnt-btn:active{transform:scale(.97)}
+#s-question{display:flex;flex-direction:column}
+.qtop{padding:13px 18px 11px;border-bottom:1px solid var(--bd);flex-shrink:0}
+.qtop-row{display:flex;align-items:center;gap:10px}
+.stop-btn{background:none;border:none;color:var(--dim);font-size:1rem;padding:4px 6px;cursor:pointer;line-height:1;flex-shrink:0;border-radius:6px;transition:color .15s}
+.stop-btn:hover{color:var(--red)}
+.pbar{flex:1;height:5px;background:var(--bd);border-radius:3px;overflow:hidden}
+.pfill{height:100%;border-radius:3px;transition:width .4s}
+.qctr{font-family:'DM Mono',monospace;font-size:12px;flex-shrink:0}
+.qscr{font-family:'DM Mono',monospace;font-size:12px;color:var(--dim);flex-shrink:0}
+.qbody{flex:1;overflow-y:auto;padding:22px 20px 14px;-webkit-overflow-scrolling:touch}
+.ptag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;margin-bottom:16px}
+.sent{font-size:1.07rem;line-height:1.85;margin-bottom:24px;color:var(--tx)}
+.gap{display:inline-block;min-width:80px;border-bottom:2px solid rgba(238,238,245,.25);margin:0 4px;vertical-align:bottom;font-family:'DM Mono',monospace;font-size:.84rem;padding:0 3px;transition:color .2s,border-color .2s}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{background:var(--s1);border:1.5px solid var(--bd);border-radius:12px;padding:14px 18px;font-size:.93rem;text-align:left;cursor:pointer;transition:background .1s,border-color .1s,transform .1s;width:100%;-webkit-appearance:none;color:var(--tx)}
+.opt:active:not(:disabled){transform:scale(.97)}
+.opt.ok{background:rgba(52,211,153,.1)!important;border-color:var(--green)!important;color:var(--green)!important}
+.opt.bad{background:rgba(251,113,133,.1)!important;border-color:var(--red)!important;color:var(--red)!important}
+.tin{width:100%;background:var(--s1);border:1.5px solid var(--bd);border-radius:12px;padding:15px 18px;font-size:1rem;color:var(--tx);font-family:'DM Mono',monospace;-webkit-appearance:none;transition:border-color .2s}
+.tin:focus{border-color:var(--blue)}
+.rbadge{display:inline-flex;align-items:center;gap:7px;margin-bottom:16px;background:rgba(129,140,248,.1);border:1px solid rgba(129,140,248,.25);border-radius:7px;padding:5px 12px}
+.rlabel{font-family:'DM Mono',monospace;font-size:10px;color:#818cf8;letter-spacing:.1em}
+.rword{font-family:'DM Mono',monospace;font-size:.95rem;color:#c7d2fe;font-weight:500}
+.origbox{background:var(--s1);border:1px solid var(--bd);border-radius:11px;padding:14px 17px;margin-bottom:14px}
+.origlbl{font-family:'DM Mono',monospace;font-size:10px;color:var(--dimmer);letter-spacing:.08em;margin-bottom:7px}
+.origtxt{font-size:.93rem;color:var(--dim);line-height:1.65;font-style:italic}
+.kbadge{display:inline-flex;align-items:center;gap:7px;margin-bottom:14px;background:rgba(251,113,133,.1);border:1px solid rgba(251,113,133,.25);border-radius:7px;padding:5px 12px}
+.klabel{font-family:'DM Mono',monospace;font-size:10px;color:var(--red);letter-spacing:.1em}
+.kword{font-family:'DM Mono',monospace;font-size:.95rem;color:#fda4af;font-weight:500}
+.trow{font-size:.97rem;line-height:2;margin-bottom:12px}
+.tgap{font-family:'DM Mono',monospace;font-size:.83rem;display:inline-block;min-width:140px;border-bottom:2px solid var(--bd);vertical-align:bottom;padding:0 3px;transition:color .2s,border-color .2s}
+.fb{border-radius:10px;padding:12px 14px;margin-top:13px}
+.fb.ok{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25)}
+.fb.bad{background:rgba(251,113,133,.08);border:1px solid rgba(251,113,133,.25)}
+.fb.mid{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25)}
+.fbm{font-family:'DM Mono',monospace;font-size:.84rem}
+.fbm.ok{color:var(--green)}.fbm.bad{color:var(--red)}.fbm.mid{color:var(--amber)}
+.fbs{font-size:.79rem;color:var(--dim);margin-top:4px}
+.mbox{background:rgba(251,113,133,.05);border:1px solid rgba(251,113,133,.17);border-radius:10px;padding:12px 14px;margin-top:10px}
+.mlbl{font-family:'DM Mono',monospace;font-size:10px;color:var(--red);letter-spacing:.1em;margin-bottom:7px}
+.mrow{font-size:.79rem;color:var(--tx);opacity:.75;line-height:1.8}
+.harea{margin-top:16px}
+.hbtn{background:transparent;border:1px dashed var(--bd);color:var(--dim);border-radius:8px;padding:7px 14px;font-size:.77rem;cursor:pointer;-webkit-appearance:none}
+.hbox{background:rgba(108,142,191,.07);border:1px solid rgba(108,142,191,.18);border-radius:9px;padding:11px 13px;margin-top:10px}
+.htag{font-family:'DM Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:.1em;margin-bottom:5px}
+.htxt{font-size:.82rem;color:var(--tx);opacity:.85;line-height:1.65}
+.qbot{flex-shrink:0;border-top:1px solid var(--bd);padding:11px 18px 32px}
+.chkbtn{width:100%;border:none;border-radius:12px;padding:15px;font-family:'Syne',sans-serif;font-weight:700;font-size:.97rem;cursor:pointer;transition:background .15s,color .15s;-webkit-appearance:none}
+.skipbtn{width:100%;background:transparent;border:1.5px solid var(--bd);border-radius:12px;padding:10px;font-family:'DM Sans',sans-serif;font-size:.85rem;color:var(--dim);cursor:pointer;margin-top:8px;-webkit-appearance:none;transition:border-color .15s,color .15s}
+.skipbtn:hover{border-color:var(--dim);color:var(--dim)}
+.nxtbtn{width:100%;border:none;border-radius:12px;padding:15px;font-family:'Syne',sans-serif;font-weight:700;font-size:.97rem;cursor:pointer;color:#0d0f1a;-webkit-appearance:none}
+#s-results{overflow-y:auto;padding:36px 22px 48px;display:flex;flex-direction:column}
+.rcrd{background:var(--s1);border-radius:14px;padding:32px 22px;text-align:center;margin-bottom:16px}
+.rscore{font-family:'Syne',sans-serif;font-weight:800;font-size:4rem;line-height:1;margin-bottom:4px}
+.rpct{font-family:'DM Mono',monospace;font-size:.84rem;color:var(--dim);margin-bottom:14px}
+.rgrade{font-family:'DM Mono',monospace;font-size:.77rem;border-radius:5px;padding:5px 14px;display:inline-block}
+.rnote{font-family:'DM Mono',monospace;font-size:.67rem;color:var(--dim);margin-top:9px}
+.rbest{text-align:center;font-family:'DM Mono',monospace;font-size:.74rem;color:var(--dim);margin-bottom:14px}
+.rbreakdown{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:20px;padding:0 4px}
+.rdot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-family:'DM Mono',monospace;font-weight:500;flex-shrink:0}
+.rdot.ok{background:rgba(52,211,153,.15);color:var(--green)}
+.rdot.bad{background:rgba(251,113,133,.15);color:var(--red)}
+.rdot.skip{background:var(--bd);color:var(--dim)}
+.streak-info{text-align:center;font-family:'DM Mono',monospace;font-size:.72rem;color:var(--dimmer);margin-bottom:4px}
+.rbtns{display:flex;flex-direction:column;gap:10px;margin-top:auto;padding-top:20px}
+.rpri{border:none;border-radius:12px;padding:15px;font-family:'Syne',sans-serif;font-weight:700;font-size:.97rem;cursor:pointer;color:#0d0f1a;-webkit-appearance:none}
+.rpri.hint-review{background:transparent!important;border:1.5px solid var(--blue)!important;color:var(--blue)!important;font-weight:500}
+.rghost{background:transparent;border:1.5px solid var(--bd);border-radius:12px;padding:15px;font-family:'DM Sans',sans-serif;font-size:.94rem;cursor:pointer;color:var(--tx);-webkit-appearance:none}
+.footer{position:fixed;bottom:0;left:0;right:0;text-align:center;padding:7px;font-family:'DM Mono',monospace;font-size:10px;color:var(--dimmer);pointer-events:none;z-index:99;letter-spacing:.06em}
+.footer{position:fixed;bottom:0;left:0;right:0;text-align:center;padding:7px 80px 7px 7px;font-family:'DM Mono',monospace;font-size:10px;color:rgba(128,128,128,.35);pointer-events:none;z-index:99;letter-spacing:.04em}
+.light .footer{color:rgba(26,26,24,.25)}
+.theme-toggle{position:fixed;bottom:4px;right:10px;background:transparent;border:1px solid var(--bd);border-radius:20px;padding:3px 10px;font-size:14px;cursor:pointer;z-index:100;color:var(--dim);transition:all .2s;-webkit-appearance:none}
+.theme-toggle{color:var(--dim)}.theme-toggle:hover{border-color:var(--p1);color:var(--p1)}
+</style>
+</head>
+<body>
+<div class="scr on" id="s-home">
+  <div class="home-pad">
+    <div class="eyebrow">CAMBRIDGE C1 ADVANCED</div>
+    <h1 class="h1">Use of English</h1>
+    <p class="sub">Reading &amp; Use of English &middot; Parts 1&ndash;4</p>
+  </div>
+  <div id="bank-btn" style="display:none;margin:0 16px 20px;background:rgba(108,142,191,.08);border:1.5px solid rgba(108,142,191,.3);border-radius:12px;padding:14px 18px;cursor:pointer;align-items:center;justify-content:space-between;gap:12px" onclick="showBankMenu()">
+    <div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:.1em;margin-bottom:4px">REVIEW BANK</div>
+      <div style="font-size:.88rem;color:var(--tx)" id="bank-label"></div>
+    </div>
+    <div style="color:var(--blue);font-size:1.2rem">&rsaquo;</div>
+  </div>
+  <div class="tiles" id="tiles"></div>
+</div>
+<div class="scr" id="s-setup">
+  <div class="setup-head">
+    <button class="bk" onclick="show('s-home')">&#8249;</button>
+    <div><div class="eyebrow" id="stag"></div><h2 id="stitle"></h2></div>
+  </div>
+  <div class="p4note" id="p4note" style="display:none">
+    Each question is worth <strong>2 marks</strong>. Score 1 mark for getting one transformation point right, 2 marks for a fully correct answer.
+  </div>
+  <div class="cnt-btns" id="cntbtns"></div>
+</div>
+<div class="scr" id="s-question">
+  <div class="qtop"><div class="qtop-row">
+    <button class="stop-btn" onclick="confirmStop()" title="Stop session">&#10005;</button>
+    <div class="pbar"><div class="pfill" id="pfill"></div></div>
+    <div class="qctr" id="qctr"></div>
+    <div class="qscr" id="qscr"></div>
+  </div></div>
+  <div class="qbody" id="qbody"></div>
+  <div class="qbot" id="qbot"></div>
+</div>
+<div class="scr" id="s-results">
+  <div class="eyebrow" id="rtag"></div>
+  <div class="rcrd" id="rcrd"></div>
+  <div class="rbest" id="rbest"></div>
+  <div class="rbreakdown" id="rbreakdown"></div>
+  <div class="rbtns">
+    <button class="rpri" id="ragain">Try Again</button>
+    <button class="rpri" id="rreview" style="display:none">Review Mistakes</button>
+    <button class="rpri" id="rreviewhint" style="display:none">Review Hint-Assisted</button>
+    <button class="rghost" onclick="show('s-home')">Home</button>
+  </div>
+</div>
+<button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">&#9788;</button>
+<script>
+const P1 = [
+  {"id": "p1_001", "sent": "The board of directors finally _______ to the pressure from shareholders and agreed to restructure.", "opts": ["A: yielded", "B: submitted", "C: conceded", "D: surrendered"], "a": "A", "h": "YIELD TO pressure is the natural collocation. 'Submit to authority' is correct but 'submit to pressure' is less natural. 'Concede' and 'surrender' don't collocate with 'to pressure' in this way."},
+  {"id": "p1_002", "sent": "The regulations will come into _______ immediately, with no transition period for businesses to prepare.", "opts": ["A: force", "B: practice", "C: operation", "D: use"], "a": "A", "h": "COME INTO FORCE = (of a law or rule) begin to apply. The others — practice, operation, use — do not collocate with 'come into' in a legal/regulatory context."},
+  {"id": "p1_003", "sent": "The documentary drew _______ to the plight of refugees living in overcrowded camps.", "opts": ["A: notice", "B: focus", "C: attention", "D: awareness"], "a": "C", "h": "DRAW ATTENTION TO is the fixed collocation. You 'raise awareness', 'bring to notice', 'shift focus' — but you always 'draw attention to' an issue."},
+  {"id": "p1_004", "sent": "After months of negotiations, the two sides finally _______ a settlement that satisfied both parties.", "opts": ["A: arrived at", "B: made", "C: got", "D: found"], "a": "A", "h": "ARRIVE AT a settlement/agreement/conclusion is the formal collocation. 'Reach' is also correct but not offered. 'Made a settlement' is not natural; 'got' and 'found' are too informal."},
+  {"id": "p1_005", "sent": "The prime minister _______ blame for the economic crisis squarely on the previous administration.", "opts": ["A: put", "B: placed", "C: laid", "D: set"], "a": "C", "h": "LAY BLAME ON is the fixed idiomatic phrase. 'Put the blame on' is also used informally, but 'lay blame on' is the standard written form. 'Placed' and 'set' don't collocate with 'blame on'."},
+  {"id": "p1_006", "sent": "The management turned a blind _______ to health and safety violations for years.", "opts": ["A: side", "B: eye", "C: face", "D: view"], "a": "B", "h": "TURN A BLIND EYE TO = deliberately ignore. Completely fixed idiom — only 'eye' works."},
+  {"id": "p1_007", "sent": "New research has shed _______ on the long-term effects of social media use on adolescent wellbeing.", "opts": ["A: understanding", "B: light", "C: clarity", "D: insight"], "a": "B", "h": "SHED LIGHT ON = reveal or explain. Fixed idiom. You cannot 'shed understanding/clarity/insight on' something."},
+  {"id": "p1_008", "sent": "She has a remarkable _______ for mimicry and can imitate any accent she hears within minutes.", "opts": ["A: talent", "B: skill", "C: gift", "D: flair"], "a": "D", "h": "FLAIR FOR = a natural, instinctive aptitude, especially for performance or creative skill. 'Talent for' and 'gift for' suggest more general ability; 'flair for mimicry' is the precise C1 collocation."},
+  {"id": "p1_009", "sent": "The launch of the product was put _______ indefinitely after problems emerged during testing.", "opts": ["A: away", "B: aside", "C: off", "D: back"], "a": "C", "h": "PUT OFF = postpone. 'Put back' also means delay but suggests rescheduling to a specific later date. 'Put off indefinitely' means with no new date set. 'Put away/aside' have completely different meanings."},
+  {"id": "p1_010", "sent": "The charity's report _______ serious concerns about the long-term sustainability of current funding.", "opts": ["A: lifted", "B: raised", "C: voiced", "D: expressed"], "a": "B", "h": "RAISE CONCERNS = bring worries to people's attention in writing or speech. 'Voice' and 'express' concerns are also correct but typically used with a human subject speaking, not a report."},
+  {"id": "p1_011", "sent": "The government's handling of the crisis has come under _______ scrutiny from opposition parties.", "opts": ["A: close", "B: severe", "C: tight", "D: sharp"], "a": "A", "h": "UNDER CLOSE SCRUTINY = examined carefully and critically. This is a fixed phrase. 'Severe', 'tight', and 'sharp' all collocate with other nouns but not 'scrutiny'."},
+  {"id": "p1_012", "sent": "His sudden decision to resign came as a complete _______ to everyone who had worked with him.", "opts": ["A: surprise", "B: wonder", "C: revelation", "D: astonishment"], "a": "A", "h": "CAME AS A SURPRISE = was unexpected. 'Came as a complete surprise' is the fixed phrase. 'Astonishment', 'wonder', and 'revelation' don't follow 'came as a complete ___' naturally."},
+  {"id": "p1_013", "sent": "A team of independent experts was asked to _______ a thorough investigation into the allegations.", "opts": ["A: make", "B: do", "C: carry out", "D: hold"], "a": "C", "h": "CARRY OUT AN INVESTIGATION = conduct formally. This is the standard phrasal verb collocation. 'Hold an investigation' is less natural; 'make/do an investigation' are not standard."},
+  {"id": "p1_014", "sent": "The reforms were _______ to fail from the outset given the lack of any real political will to implement them.", "opts": ["A: certain", "B: bound", "C: likely", "D: destined"], "a": "B", "h": "BOUND TO = certain to happen, especially something negative or inevitable. 'Certain to' is also correct but 'bound to fail' is the stronger, more idiomatic expression at C1."},
+  {"id": "p1_015", "sent": "The revelations cast a long _______ over what had previously been considered a successful administration.", "opts": ["A: darkness", "B: shade", "C: shadow", "D: cloud"], "a": "C", "h": "CAST A SHADOW OVER = damage the reputation of. Fixed idiom. 'Cast a cloud over' is also used — but only 'shadow' collocates with 'cast a long ___'."},
+  {"id": "p1_016", "sent": "She was _______ aware of the risks but decided to invest anyway, convinced the returns would be worth it.", "opts": ["A: full", "B: deeply", "C: fully", "D: highly"], "a": "C", "h": "FULLY AWARE = completely aware of all aspects. 'Full aware' is grammatically wrong (adverb needed). 'Deeply aware' is non-standard. 'Highly aware' is not a natural collocation."},
+  {"id": "p1_017", "sent": "The reforms were _______ welcomed, though unions insisted they did not go far enough.", "opts": ["A: broadly", "B: warmly", "C: fully", "D: deeply"], "a": "A", "h": "BROADLY WELCOMED = accepted by most without fundamental objection, but with reservations. 'Warmly' implies enthusiasm without qualification. 'Fully' means completely. 'Deeply' doesn't collocate with 'welcomed'. 'Broadly' precisely matches the qualified reaction described."},
+  {"id": "p1_018", "sent": "The report was _______ critical of the minister's conduct, demanding a full public inquiry.", "opts": ["A: openly", "B: bitterly", "C: sharply", "D: intensely"], "a": "C", "h": "SHARPLY CRITICAL = critical in a precise, incisive way. 'Bitterly critical' implies personal resentment. 'Intensely critical' is non-standard. 'Openly critical' means doing so publicly. 'Sharply critical' is the standard formal collocation for analytical criticism."},
+  {"id": "p1_019", "sent": "She _______ a brave face throughout the ordeal, though everyone could see she was struggling.", "opts": ["A: made", "B: kept", "C: put on", "D: wore"], "a": "C", "h": "PUT ON A BRAVE FACE = pretend to be cheerful. Fixed idiom. 'Keep a brave face' and 'wear a brave face' are not standard. 'Make a brave face' is incorrect."},
+  {"id": "p1_020", "sent": "The new bypass is _______ to reduce journey times between the two towns by up to twenty minutes.", "opts": ["A: expected", "B: aimed", "C: set", "D: planned"], "a": "C", "h": "SET TO = on course to, about to. 'Is set to reduce' is journalistic and means 'will imminently'. 'Expected to' and 'planned to' are possible but weaker. 'Aimed to' requires 'aimed at reducing'."},
+  {"id": "p1_021", "sent": "The artist's later work was _______ by his turbulent personal life during those years.", "opts": ["A: inspired", "B: informed", "C: driven", "D: fuelled"], "a": "B", "h": "INFORMED BY = shaped and given depth by. 'Inspired by' suggests the source of ideas but not deep influence. 'Driven by' implies motivation rather than influence. 'Informed by experience' is the precise C1 collocation for artistic/intellectual work."},
+  {"id": "p1_022", "sent": "The manager's handling of the dispute has _______ her reputation considerably.", "opts": ["A: damaged", "B: harmed", "C: tarnished", "D: sullied"], "a": "C", "h": "TARNISHED = slightly damaged something previously bright and admirable. More precise than 'damaged' or 'harmed' for reputation. 'Sullied' is also used but is more literary; 'tarnished reputation' is the standard C1 collocation."},
+  {"id": "p1_023", "sent": "The organisation relies _______ on government grants and would not survive without them.", "opts": ["A: deeply", "B: heavily", "C: greatly", "D: strongly"], "a": "B", "h": "RELY HEAVILY ON = depend to a great degree on. Fixed adverb collocating with 'rely'. The others are wrong: you don't 'rely deeply/greatly/strongly on' something."},
+  {"id": "p1_024", "sent": "The government's refusal to act has _______ the problem and made it far harder to address.", "opts": ["A: worsened", "B: deepened", "C: compounded", "D: intensified"], "a": "C", "h": "COMPOUNDED THE PROBLEM = made worse by adding to it; implies accumulation. 'Worsened' and 'intensified' are general. 'Deepened' suggests going to a deeper level. 'Compounded' is precise — the refusal added to an already existing problem."},
+  {"id": "p1_025", "sent": "The new filtration system is _______ to remove up to ninety-nine percent of waterborne contaminants.", "opts": ["A: capable", "B: designed", "C: able", "D: built"], "a": "B", "h": "DESIGNED TO = engineered or constructed for a specific purpose. 'Capable of' needs 'of removing', not 'to remove'. 'Able to' requires an animate subject. 'Built to' is possible but 'designed to' is the standard technical collocation."},
+  {"id": "p1_026", "sent": "The journalist had spent months trying to _______ an interview with the famously private CEO.", "opts": ["A: obtain", "B: secure", "C: gain", "D: win"], "a": "B", "h": "SECURE AN INTERVIEW = achieve through effort and competition. 'Secure' implies that access was difficult and the outcome not guaranteed. 'Obtain' and 'gain' are more neutral; 'win an interview' is not standard."},
+  {"id": "p1_027", "sent": "The prime minister's apology simply didn't _______ with a public already deeply sceptical of his sincerity.", "opts": ["A: connect", "B: register", "C: resonate", "D: land"], "a": "C", "h": "RESONATE WITH = have emotional or intellectual meaning for an audience. 'Resonate with the public' is the fixed C1 collocation. 'Land' is too informal. 'Register with' and 'connect with' imply different kinds of impact."},
+  {"id": "p1_028", "sent": "The board resolved to _______ any decision on the acquisition until a full due diligence report had been completed.", "opts": ["A: withhold", "B: defer", "C: delay", "D: postpone"], "a": "B", "h": "DEFER A DECISION = formally put off to a later occasion, used specifically in boardroom and committee language. 'Postpone' is general. 'Delay' implies passive obstruction. 'Withhold a decision' is not standard. Only 'defer' fits formal board/committee register."},
+  {"id": "p1_029", "sent": "She took the unexpected demotion in her _______, choosing to focus on what lay ahead.", "opts": ["A: step", "B: pace", "C: stride", "D: walk"], "a": "C", "h": "TAKE IN ONE'S STRIDE = accept calmly without being upset. Fixed idiom — only 'stride' works."},
+  {"id": "p1_030", "sent": "The decision is likely to have _______ consequences for the region's agricultural sector.", "opts": ["A: broad", "B: wide", "C: far-reaching", "D: sweeping"], "a": "C", "h": "FAR-REACHING CONSEQUENCES = effects that extend widely and affect many areas. 'Far-reaching' specifically collocates with 'consequences' and 'implications'. 'Sweeping' collocates with 'changes' or 'reforms', not consequences."},
+  {"id": "p1_031", "sent": "When it comes to attention to detail, her work is second to _______ in the entire department.", "opts": ["A: all", "B: none", "C: any", "D: nothing"], "a": "B", "h": "SECOND TO NONE = the best of all. Completely fixed superlative idiom — only 'none' works."},
+  {"id": "p1_032", "sent": "The committee has been _______ on announcing a decision, citing the need for further consultation.", "opts": ["A: slow", "B: reluctant", "C: holding back", "D: sitting"], "a": "C", "h": "HOLDING BACK ON = deliberately delaying or withholding. The phrasal verb is needed here. 'Slow to announce' would require 'to'. 'Reluctant to announce' also needs 'to'. 'Sitting on a decision' is informal but 'sitting on announcing' is not natural."},
+  {"id": "p1_033", "sent": "The new legislation is expected to have a profound _______ on the way universities allocate funding.", "opts": ["A: effect", "B: impact", "C: result", "D: consequence"], "a": "B", "h": "PROFOUND IMPACT ON = a powerful, far-reaching effect. 'Profound impact' is the dominant collocation. 'Profound effect' is also used but 'effect' alone is weaker here. 'Result' and 'consequence' require different prepositions and constructions."},
+  {"id": "p1_034", "sent": "The anonymous tip-off _______ serious doubts over the integrity of the selection process.", "opts": ["A: raised", "B: cast", "C: threw", "D: placed"], "a": "B", "h": "CAST DOUBT ON = make something seem uncertain. Fixed idiom. 'Cast doubts over' is also standard. 'Raise doubts' is possible but less idiomatic here. 'Threw doubt' and 'placed doubt' are not standard."},
+  {"id": "p1_035", "sent": "Several prominent academics _______ their concerns about the proposed changes to the curriculum.", "opts": ["A: voiced", "B: said", "C: spoke", "D: told"], "a": "A", "h": "VOICE CONCERNS = publicly and formally express worries. 'Said' and 'told' require direct objects or clauses. 'Spoke concerns' is not standard. 'Voice' is the precise verb for publicly expressing concerns."},
+  {"id": "p1_036", "sent": "The original structure of the building has _______ largely intact despite decades of heavy use.", "opts": ["A: lasted", "B: remained", "C: stayed", "D: kept"], "a": "B", "h": "REMAINED INTACT = continued to be in a particular state. 'Remained' + adjective/adverb phrase is the standard formal construction. 'Stayed intact' is possible but less formal. 'Lasted intact' and 'kept intact' are not standard."},
+  {"id": "p1_037", "sent": "Despite fierce opposition, the council _______ with its controversial redevelopment scheme.", "opts": ["A: carried on", "B: went ahead", "C: moved forward", "D: followed through"], "a": "B", "h": "WENT AHEAD WITH = proceeded with a plan despite opposition. The fixed phrase for official plans proceeding. 'Followed through with' is close but less formal. 'Moved forward with' is too informal. 'Carried on with' lacks the sense of a deliberate decision to proceed."},
+  {"id": "p1_038", "sent": "The bursary scheme _______ students from disadvantaged backgrounds the opportunity to study abroad.", "opts": ["A: gives", "B: affords", "C: offers", "D: grants"], "a": "B", "h": "AFFORDS = provides or makes possible, especially in formal written English. 'Afford someone the opportunity' is a fixed formal collocation. 'Grant an opportunity' is also formal but implies authority giving permission. 'Gives' and 'offers' are too informal for this register."},
+  {"id": "p1_039", "sent": "The new planning restrictions were _______ in specifically to protect areas of outstanding natural beauty.", "opts": ["A: brought", "B: pushed", "C: written", "D: built"], "a": "A", "h": "BROUGHT IN = officially introduced (legislation, rules, measures). Fixed phrasal verb for introducing policy. 'Written in' means included in a document. 'Pushed through' suggests force. Only 'brought in' means officially enacted."},
+  {"id": "p1_040", "sent": "The researchers claim their method has _______ new ground in the treatment of antibiotic-resistant infections.", "opts": ["A: covered", "B: broken", "C: opened", "D: cleared"], "a": "B", "h": "BROKEN NEW GROUND = done something innovative or pioneering. Fixed idiom. You cannot 'cover/open/clear new ground' in this metaphorical sense."},
+  {"id": "p1_041", "sent": "Membership of the association has been _______ steadily, raising concerns about its long-term viability.", "opts": ["A: declining", "B: reducing", "C: shrinking", "D: lessening"], "a": "A", "h": "DECLINING = decreasing gradually over time, especially for measured quantities like membership, confidence, or performance. 'Declining membership' is the standard formal collocation. 'Shrinking' is informal. 'Reducing' is transitive. 'Lessening' is archaic."},
+  {"id": "p1_042", "sent": "She was _______ by the scale of the task ahead of her but determined not to show it.", "opts": ["A: nervous", "B: daunted", "C: frightened", "D: overwhelmed"], "a": "B", "h": "DAUNTED = intimidated or discouraged by the scale of a challenge. More precise than 'nervous' (which implies anxiety) or 'frightened' (which suggests fear). 'Overwhelmed' means unable to cope — but the sentence implies she was coping."},
+  {"id": "p1_043", "sent": "The construction work caused considerable _______ to commuters travelling through the city centre.", "opts": ["A: disturbance", "B: disruption", "C: interference", "D: inconvenience"], "a": "B", "h": "DISRUPTION = serious interruption to a system or service. 'Disruption to commuters/traffic/services' is the standard collocation. 'Inconvenience' is too mild. 'Disturbance' is used for noise or public order. 'Interference' takes a different preposition."},
+  {"id": "p1_044", "sent": "The chairperson made it _______ that any proposal involving additional borrowing would be vetoed.", "opts": ["A: obvious", "B: apparent", "C: known", "D: clear"], "a": "C", "h": "MADE IT KNOWN = formally communicated a position or intention, especially in official contexts. 'Made it known that X would be vetoed' is the standard phrase for broadcasting an institutional position. 'Made it clear' works too, but 'known' better captures the public announcement register."},
+  {"id": "p1_045", "sent": "The updated software has _______ a marked improvement in processing speed across all platforms.", "opts": ["A: produced", "B: resulted in", "C: delivered", "D: yielded"], "a": "D", "h": "YIELDED = produced as a measurable result, especially in technical or scientific contexts. 'Yield a result/improvement/return' is the precise formal collocation. 'Delivered an improvement' implies intentional service. 'Produced' is general. 'Resulted in' needs a different construction."},
+  {"id": "p1_046", "sent": "The children were _______ to treat others with respect and to take responsibility for their actions.", "opts": ["A: raised", "B: taught", "C: brought up", "D: educated"], "a": "C", "h": "BROUGHT UP TO = instilled with values during childhood as part of upbringing. In British English this is the standard phrasal verb. 'Raised' is primarily American English. 'Taught' and 'educated' suggest formal instruction, not upbringing."},
+  {"id": "p1_047", "sent": "The company was found to have systematically _______ its obligations under the terms of the contract.", "opts": ["A: broken", "B: infringed", "C: violated", "D: breached"], "a": "D", "h": "BREACHED OBLIGATIONS/CONTRACT = failed to fulfil a legal requirement. 'Breach' is the most precise legal term for failing to meet contractual or regulatory obligations. 'Violate' works for laws and rights; 'breach' is specific to contracts and duties."},
+  {"id": "p1_048", "sent": "As the deadline approached, the team _______ themselves for what promised to be a gruelling final push.", "opts": ["A: prepared", "B: braced", "C: readied", "D: steeled"], "a": "D", "h": "STEELED THEMSELVES FOR = mentally hardened themselves in preparation for something difficult. 'Braced themselves for' implies preparing for an impact or shock. 'Steel yourself' specifically suggests mental toughening for prolonged effort."},
+  {"id": "p1_049", "sent": "The revelation _______ an immediate storm of controversy, with the opposition calling for a full inquiry.", "opts": ["A: stirred up", "B: created", "C: sparked", "D: prompted"], "a": "C", "h": "SPARKED = caused a controversy to begin suddenly and dramatically. 'Spark a storm of controversy' is the vivid, established journalistic collocation. 'Stirred up' is informal. 'Prompted' suggests a more measured response. 'Created' is too neutral."},
+  {"id": "p1_050", "sent": "The application was _______ on the grounds that the proposed development would harm the local environment.", "opts": ["A: dismissed", "B: rejected", "C: overturned", "D: refused"], "a": "B", "h": "REJECTED ON THE GROUNDS THAT = officially refused citing specific stated reasons. 'Rejected' implies a formal decision with reasons given. 'Dismissed' suggests the application wasn't taken seriously. 'Refused' and 'overturned' imply different processes."},
+];
+const P2 = [
+  {"id": "p2_001", "sent": "The committee reached a decision _______ which all members could agree.", "a": "on", "h": "Which preposition follows 'decision' when you specify what it's about? Think: a decision ___ something."},
+  {"id": "p2_002", "sent": "_______ having studied for weeks, she still found the exam extremely difficult.", "a": "despite", "h": "Which preposition or conjunction introduces a concessive clause followed by a gerund? ___ having studied..."},
+  {"id": "p2_003", "sent": "The results were _______ better than expected, surprising even the most optimistic researchers.", "a": "far", "h": "Which single word intensifies a comparative adjective? ___ better, ___ worse, ___ more interesting."},
+  {"id": "p2_004", "sent": "It was not _______ she arrived home that she realised her keys were missing.", "a": "until", "h": "Fixed negative time structure: 'It was not ___ she arrived that she realised.' Which conjunction?"},
+  {"id": "p2_005", "sent": "The new law, _______ comes into force next month, will affect millions of workers.", "a": "which", "h": "Which relative pronoun introduces a non-defining relative clause? Remember: 'that' cannot be used with commas."},
+  {"id": "p2_006", "sent": "She speaks French so fluently _______ she could easily pass for a native speaker.", "a": "that", "h": "What word introduces the result clause in 'so fluently ___ she could pass for a native speaker'?"},
+  {"id": "p2_007", "sent": "The proposal was met _______ considerable resistance from local residents.", "a": "with", "h": "Which preposition completes 'met ___ resistance'? Think about what you 'meet with' in formal English."},
+  {"id": "p2_008", "sent": "_______ few people realise is that the brain consumes twenty percent of the body's total energy.", "a": "what", "h": "Which question word introduces a nominal clause as subject? '___ few people realise is that...'"},
+  {"id": "p2_009", "sent": "The conference will go _______ regardless of whether the keynote speaker is available.", "a": "ahead", "h": "Which particle completes the phrasal verb meaning 'proceed as planned'? The conference will go ___."},
+  {"id": "p2_010", "sent": "_______ all her faults, she remains one of the most effective leaders the organisation has had.", "a": "for", "h": "Which preposition completes the fixed concessive phrase '___ all her faults'? Equivalent to 'despite'."},
+  {"id": "p2_011", "sent": "The CEO refused to comment, _______ which point the journalist ended the interview.", "a": "at", "h": "Which preposition completes the fixed relative phrase '___ which point'? Think about timing."},
+  {"id": "p2_012", "sent": "Had the engineers spotted the fault earlier, the accident _______ have been avoided.", "a": "could", "h": "This is a third conditional with inversion. What modal verb fits? 'Had they spotted it, the accident ___ have been avoided.'"},
+  {"id": "p2_013", "sent": "The discovery was all _______ more remarkable given the limited resources the team had.", "a": "the", "h": "Fixed intensifier phrase: 'all ___ more remarkable'. Which article completes it?"},
+  {"id": "p2_014", "sent": "The scheme is expected _______ create over two thousand permanent jobs in the region.", "a": "to", "h": "Passive reporting structure: 'is expected ___ create'. Which word links the passive verb to the infinitive?"},
+  {"id": "p2_015", "sent": "She was _______ the impression that the meeting had been cancelled, which is why she didn't attend.", "a": "under", "h": "Fixed prepositional phrase for believing something (possibly incorrectly): '___ the impression that'. Which preposition?"},
+  {"id": "p2_016", "sent": "_______ no circumstances should personal data be shared with third parties without consent.", "a": "under", "h": "This sentence uses negative fronting. Which two-word phrase meaning 'never' completes '___ no circumstances should...'?"},
+  {"id": "p2_017", "sent": "The new model differs _______ its predecessor in several important respects.", "a": "from", "h": "Which preposition follows 'differs' when comparing two things? The new model differs ___ its predecessor."},
+  {"id": "p2_018", "sent": "Much _______ everyone's surprise, the least-fancied team won the championship.", "a": "to", "h": "Fixed exclamatory phrase: 'Much ___ everyone's surprise'. Which preposition?"},
+  {"id": "p2_019", "sent": "The report makes _______ clear that further investment is urgently needed.", "a": "it", "h": "Anticipatory structure: 'makes ___ clear that'. Which pronoun acts as a dummy object here?"},
+  {"id": "p2_020", "sent": "She had no _______ but to accept the terms imposed by the new agreement.", "a": "choice/option", "h": "Fixed phrase of compulsion: 'had no ___ but to accept'. Which noun fits?"},
+  {"id": "p2_021", "sent": "The evidence lends considerable _______ to the theory that sleep deprivation impairs judgement.", "a": "weight", "h": "Which noun collocates with 'lend' and 'to' to mean 'strengthen or support a theory'? Lend ___ to."},
+  {"id": "p2_022", "sent": "By the time the rescue team arrived, the survivors _______ been waiting for over twenty hours.", "a": "had", "h": "What auxiliary verb is needed? 'By the time they arrived, the survivors ___ been waiting for hours.' \u2014 Past perfect."},
+  {"id": "p2_023", "sent": "_______ is often the case with complex legislation, the new law has had unintended consequences.", "a": "as", "h": "Fixed comparative clause: '___ is often the case with'. Which word (not 'like') introduces a clause of comparison?"},
+  {"id": "p2_024", "sent": "The government has been accused of turning a blind _______ to corruption at the highest levels.", "a": "eye", "h": "Which body part completes the fixed idiom 'turning a blind ___ to corruption'?"},
+  {"id": "p2_025", "sent": "No _______ how hard she tried, she could not persuade the committee to change its decision.", "a": "matter", "h": "Fixed concessive phrase: 'No ___ how hard she tried'. Which noun?"},
+  {"id": "p2_026", "sent": "The new regulations come _______ effect from the first of January.", "a": "into", "h": "Which preposition completes 'come ___ effect'? Think: the regulations came into ___."},
+  {"id": "p2_027", "sent": "The evidence points _______ the conclusion that the fire was started deliberately.", "a": "to", "h": "Which preposition follows 'points' when evidence suggests something? The evidence points ___ the conclusion."},
+  {"id": "p2_028", "sent": "It goes _______ saying that honesty is the foundation of any trusting relationship.", "a": "without", "h": "Fixed idiom meaning 'is so obvious it doesn't need stating'. Which preposition completes 'goes ___ saying'?"},
+  {"id": "p2_029", "sent": "The professor was held _______ high regard by colleagues across the field.", "a": "in", "h": "Fixed phrase: 'held ___ high regard'. Which preposition?"},
+  {"id": "p2_030", "sent": "_______ the fact that she had very little experience, she handled the crisis with remarkable skill.", "a": "given", "h": "Which word introduces a concessive clause meaning 'considering' or 'taking into account'?"},
+  {"id": "p2_031", "sent": "She is _______ no means the most experienced candidate, but she is by far the most enthusiastic.", "a": "by", "h": "Fixed emphatic negative: '___ no means'. Which two-word phrase meaning 'not at all'?"},
+  {"id": "p2_032", "sent": "The longer the problem goes unaddressed, _______ more difficult it becomes to find a solution.", "a": "the", "h": "Parallel comparative structure: 'The longer X, ___ more difficult Y'. Which article?"},
+  {"id": "p2_033", "sent": "The agreement was signed _______ the presence of senior officials from both governments.", "a": "in", "h": "Fixed phrase: 'signed ___ the presence of officials'. Which preposition?"},
+  {"id": "p2_034", "sent": "_______ being a talented musician, she is also a published author and accomplished painter.", "a": "besides/as well as", "h": "Which word (or two-word phrase) means 'in addition to' and takes a gerund? ___ being a musician, she is also..."},
+  {"id": "p2_035", "sent": "The exhibition, _______ runs until the end of November, has attracted over fifty thousand visitors.", "a": "which", "h": "Which relative pronoun introduces a non-defining clause? The exhibition, ___ runs until November..."},
+  {"id": "p2_036", "sent": "She was at a loss _______ to what she should do next, having never faced such a situation.", "a": "as", "h": "Fixed phrase: 'at a loss ___ to what she should do'. Which preposition?"},
+  {"id": "p2_037", "sent": "The artist drew _______ from her childhood experiences growing up in rural Ireland.", "a": "inspiration", "h": "Which noun collocates with 'drew' and 'from' to describe a creative source? She drew ___ from her childhood."},
+  {"id": "p2_038", "sent": "He behaved _______ if he had never met her, which made the situation extremely awkward.", "a": "as", "h": "Which word introduces an unreal comparison? He behaved ___ if he had never met her."},
+  {"id": "p2_039", "sent": "_______ she had not eaten anything since breakfast, she showed no signs of fatigue.", "a": "although/even though/though", "h": "Which concessive conjunction introduces a contrast clause? ___ she had not eaten, she showed no fatigue."},
+  {"id": "p2_040", "sent": "The new bridge will _______ doubt become a landmark feature of the city's skyline.", "a": "without", "h": "Fixed adverbial phrase meaning 'certainly'. It will ___ doubt become a landmark. Which preposition?"},
+  {"id": "p2_041", "sent": "The study found _______ evidence to suggest a link between screen time and poor sleep quality.", "a": "little/no/some", "h": "Which quantifier fits? The study found ___ evidence \u2014 think about what the study likely concluded."},
+  {"id": "p2_042", "sent": "The theatre has been undergoing major renovations, _______ is why performances have been cancelled.", "a": "which", "h": "Which relative pronoun refers back to the whole previous clause? The theatre has been renovating, ___ is why..."},
+  {"id": "p2_043", "sent": "On _______ of the company, I would like to thank everyone who contributed to this project.", "a": "behalf", "h": "Fixed formal phrase: 'On ___ of the company'. Which noun means 'representing' or 'in the name of'?"},
+  {"id": "p2_044", "sent": "The minister was asked to account _______ the discrepancies in the budget report.", "a": "for", "h": "Which preposition follows 'account' in the phrasal verb meaning 'explain or justify'? Asked to account ___ the discrepancies."},
+  {"id": "p2_045", "sent": "The new policy came _______ force on the first day of the new financial year.", "a": "into", "h": "Which preposition completes 'came ___ force'? A synonym of 'come into effect' for laws."},
+];
+const P3 = [
+  {"id": "p3_001", "sent": "The company's [FAIL] to adapt to changing market conditions ultimately led to its collapse.", "root": "FAIL", "a": "failure", "h": "FAIL (verb) → FAILURE (noun). Suffix -URE. 'The company's failure to do X' = the fact that the company failed to."},
+  {"id": "p3_002", "sent": "The [PUBLISH] of the leaked documents caused a major political controversy.", "root": "PUBLISH", "a": "publication", "h": "PUBLISH (verb) → PUBLICATION (noun). Suffix -ATION. 'The publication of documents' = the act of publishing them."},
+  {"id": "p3_003", "sent": "Many young people feel [OVERWHELM] by the sheer scale of the environmental challenges ahead.", "root": "OVERWHELM", "a": "overwhelmed", "h": "OVERWHELM (verb) → OVERWHELMED (past participle as adjective). 'Feel overwhelmed' = passive: be overcome by something too large to cope with."},
+  {"id": "p3_004", "sent": "The minister gave an [ACCURATE] account of events, which directly contradicted what witnesses had said.", "root": "ACCURATE", "a": "inaccurate", "h": "ACCURATE (adjective) → INACCURATE (negative adjective). Prefix IN- reverses the meaning. The account contradicted witnesses, so it was not accurate."},
+  {"id": "p3_005", "sent": "The committee's [REJECT] of the proposal came as a surprise to many who expected it to be approved.", "root": "REJECT", "a": "rejection", "h": "REJECT (verb) → REJECTION (noun). Suffix -ION. 'The rejection of something' = the act of rejecting it."},
+  {"id": "p3_006", "sent": "She was known for her [FORESEE], always anticipating problems long before they arose.", "root": "FORESEE", "a": "foresight", "h": "FORESEE (verb) → FORESIGHT (noun). Irregular: FORE- prefix + SIGHT. The ability to predict future events — not 'foreseeing'."},
+  {"id": "p3_007", "sent": "The council has a legal [OBLIGE] to ensure that all public buildings meet accessibility standards.", "root": "OBLIGE", "a": "obligation", "h": "OBLIGE (verb) → OBLIGATION (noun). OBLIG- + -ATION. A legal or moral duty — not 'obligement' or 'obliging'."},
+  {"id": "p3_008", "sent": "The new treatment has shown highly [PROMISE] results in early clinical trials.", "root": "PROMISE", "a": "promising", "h": "PROMISE (verb/noun) → PROMISING (adjective). Suffix -ING. 'Highly promising results' = results that show great potential."},
+  {"id": "p3_009", "sent": "She demonstrated remarkable [PERSEVERE] throughout the gruelling eighteen-month training programme.", "root": "PERSEVERE", "a": "perseverance", "h": "PERSEVERE (verb) → PERSEVERANCE (noun). PERSEVER- + -ANCE. Continued effort despite difficulty — note the spelling change."},
+  {"id": "p3_010", "sent": "The [MERGE] of the two rival companies was announced at a press conference yesterday morning.", "root": "MERGE", "a": "merger", "h": "MERGE (verb) → MERGER (noun). Suffix -ER. The combining of two organisations into one — 'merge' becomes 'merger'."},
+  {"id": "p3_011", "sent": "He made several [SUCCEED] attempts to access the system before his account was permanently locked.", "root": "SUCCEED", "a": "unsuccessful", "h": "SUCCEED → UNSUCCESSFUL. UN- + SUCCESS + -FUL + -adjective. He did not succeed, so: UN- (negative prefix) + SUCCESSF- + -UL. Three morphemes: UN + SUCCESS + FUL."},
+  {"id": "p3_012", "sent": "The team's [ACHIEVE] in reaching the final was celebrated by supporters across the country.", "root": "ACHIEVE", "a": "achievement", "h": "ACHIEVE (verb) → ACHIEVEMENT (noun). Suffix -MENT. Something successfully accomplished — 'achieve' + -ment."},
+  {"id": "p3_013", "sent": "The [WEAK] of the building's foundations was only discovered during renovation work.", "root": "WEAK", "a": "weakness", "h": "WEAK (adjective) → WEAKNESS (noun). Suffix -NESS. A structural or physical fault — 'weak' becomes 'weakness'."},
+  {"id": "p3_014", "sent": "Her [WILL] to accept criticism made it very difficult for colleagues to work with her.", "root": "WILL", "a": "unwillingness", "h": "WILL → UNWILLINGNESS. UN- + WILLING + -NESS. Three steps: WILL → WILLING (adjective) → UNWILLING (negative) → UNWILLINGNESS (noun)."},
+  {"id": "p3_015", "sent": "The report highlighted the [ADEQUATE] of existing legislation in dealing with online financial fraud.", "root": "ADEQUATE", "a": "inadequacy", "h": "ADEQUATE → INADEQUACY. IN- (negative) + ADEQUATE → INADEQUATE → INADEQUACY (noun with -CY). The legislation was not adequate."},
+  {"id": "p3_016", "sent": "Her research has received [WIDE] recognition across the international scientific community.", "root": "WIDE", "a": "widespread", "h": "WIDE → WIDESPREAD. WIDE + SPREAD = compound adjective. 'Widespread recognition' = recognition existing in many places. Not 'widely' (adverb) — the noun 'recognition' needs an adjective."},
+  {"id": "p3_017", "sent": "The school was praised for its [INNOVATE] approach to addressing underachievement among disadvantaged pupils.", "root": "INNOVATE", "a": "innovative", "h": "INNOVATE (verb) → INNOVATIVE (adjective). Suffix -IVE. Describing an approach that uses new ideas and methods."},
+  {"id": "p3_018", "sent": "The [DISCOVER] of the ancient burial site has significant implications for our understanding of the period.", "root": "DISCOVER", "a": "discovery", "h": "DISCOVER (verb) → DISCOVERY (noun). Suffix -Y (with spelling change). The act of finding something previously unknown."},
+  {"id": "p3_019", "sent": "Many staff felt [VALUE] by the management's failure to consult them before implementing the changes.", "root": "VALUE", "a": "undervalued", "h": "VALUE → UNDERVALUED. UNDER- (prefix: not sufficiently) + VALUE + -D (past participle). Not given sufficient recognition or appreciation."},
+  {"id": "p3_020", "sent": "The regeneration project has greatly improved the [ACCESSIBLE] of the city's outer districts.", "root": "ACCESSIBLE", "a": "accessibility", "h": "ACCESSIBLE (adjective) → ACCESSIBILITY (noun). Change -BLE to -BILITY: ACCESSIBIL- + -ITY. The quality of being easy to reach or use."},
+  {"id": "p3_021", "sent": "She handled the delicate diplomatic situation with great [SENSITIVE] and tact.", "root": "SENSITIVE", "a": "sensitivity", "h": "SENSITIVE (adjective) → SENSITIVITY (noun). SENSITIV- + -ITY. The quality of being aware of and considerate towards others."},
+  {"id": "p3_022", "sent": "Researchers were surprised by the [RELUCTANT] of many participants to engage openly with the study.", "root": "RELUCTANT", "a": "reluctance", "h": "RELUCTANT (adjective) → RELUCTANCE (noun). RELUCT- + -ANCE. Unwillingness or hesitation — 'reluctant' becomes 'reluctance'."},
+  {"id": "p3_023", "sent": "The [IMPLEMENT] of the new IT system took far longer than expected and caused significant disruption.", "root": "IMPLEMENT", "a": "implementation", "h": "IMPLEMENT (verb) → IMPLEMENTATION (noun). IMPLEMENT- + -ATION. The process of putting a plan or system into practice."},
+  {"id": "p3_024", "sent": "The ambassador's formal [ENDORSE] of the agreement was widely seen as a diplomatic breakthrough.", "root": "ENDORSE", "a": "endorsement", "h": "ENDORSE (verb) → ENDORSEMENT (noun). ENDORS- + -EMENT. Formal approval or support — 'endorse' becomes 'endorsement'."},
+  {"id": "p3_025", "sent": "She was [REFRESH] candid about the difficulties she had encountered during the research process.", "root": "REFRESH", "a": "refreshingly", "h": "REFRESH → REFRESHINGLY. REFRESH → REFRESHING (adjective) → REFRESHINGLY (adverb with -LY). In a way that is pleasantly honest and unexpected."},
+  {"id": "p3_026", "sent": "The council adopted a [CONSULT] approach, holding several public meetings before finalising the plans.", "root": "CONSULT", "a": "consultative", "h": "CONSULT (verb) → CONSULTATIVE (adjective). CONSULT- + -ATIVE. Describing an approach that involves seeking input from others."},
+  {"id": "p3_027", "sent": "A serious [COMMUNICATE] between the two project teams led to significant and costly delays.", "root": "COMMUNICATE", "a": "miscommunication", "h": "COMMUNICATE → MISCOMMUNICATION. MIS- (wrong/bad) + COMMUNICATE → MISCOMMUNICATION (noun). A failure to communicate clearly or correctly."},
+  {"id": "p3_028", "sent": "The success of the fundraising campaign was [LARGE] dependent on the goodwill of local volunteers.", "root": "LARGE", "a": "largely", "h": "LARGE (adjective) → LARGELY (adverb). Suffix -LY. 'Largely dependent on' = mostly, to a great extent. Modifies the adjective 'dependent'."},
+  {"id": "p3_029", "sent": "Her [DETERMINE] to complete the novel despite her illness was an inspiration to everyone who knew her.", "root": "DETERMINE", "a": "determination", "h": "DETERMINE (verb) → DETERMINATION (noun). DETERMIN- + -ATION. Firmness of purpose; the quality of being determined."},
+  {"id": "p3_030", "sent": "The bridge was declared [SAFE] and closed to all vehicles immediately after the inspection.", "root": "SAFE", "a": "unsafe", "h": "SAFE (adjective) → UNSAFE (negative adjective). Prefix UN- = not. Simple negation: the bridge was not safe to use."},
+  {"id": "p3_031", "sent": "A solid understanding of the [FOUND] of scientific method is essential for all research students.", "root": "FOUND", "a": "foundations", "h": "FOUND (verb: to establish) → FOUNDATIONS (plural noun). FOUND + -ATION + plural -S. The basic underlying principles — must be plural here."},
+  {"id": "p3_032", "sent": "The new measures have been [BROAD] welcomed by businesses, though some concerns remain.", "root": "BROAD", "a": "broadly", "h": "BROAD (adjective) → BROADLY (adverb). Suffix -LY. 'Broadly welcomed' = generally, by most people. Modifies the past participle 'welcomed'."},
+  {"id": "p3_033", "sent": "The [DEVASTATE] effects of the financial crash continued to be felt for over a decade.", "root": "DEVASTATE", "a": "devastating", "h": "DEVASTATE (verb) → DEVASTATING (adjective). Suffix -ING. Causing severe and widespread damage — modifies the noun 'effects'."},
+  {"id": "p3_034", "sent": "The level of [CONTAMINATE] in the city's water supply was found to be within acceptable limits.", "root": "CONTAMINATE", "a": "contamination", "h": "CONTAMINATE (verb) → CONTAMINATION (noun). CONTAMINAT- + -ION. The presence of harmful substances in something."},
+  {"id": "p3_035", "sent": "Her [RESILIENT] in the face of repeated setbacks earned the admiration of her colleagues.", "root": "RESILIENT", "a": "resilience", "h": "RESILIENT (adjective) → RESILIENCE (noun). Change -ENT to -ENCE: RESILI- + -ENCE. The ability to recover from difficulties."},
+  {"id": "p3_036", "sent": "The [AUTHENTIC] of the ancient manuscript had been disputed for many years before new tests resolved the matter.", "root": "AUTHENTIC", "a": "authenticity", "h": "AUTHENTIC (adjective) → AUTHENTICITY (noun). AUTHENTIC + -ITY. The quality of being genuine or original."},
+  {"id": "p3_037", "sent": "He showed great [FLEXIBLE] in managing the conflicting demands of his many clients simultaneously.", "root": "FLEXIBLE", "a": "flexibility", "h": "FLEXIBLE (adjective) → FLEXIBILITY (noun). Change -BLE to -BILITY: FLEXIBIL- + -ITY. The ability to adapt to different situations."},
+  {"id": "p3_038", "sent": "The [INTRODUCE] of the new bus routes has transformed commuting for thousands of residents.", "root": "INTRODUCE", "a": "introduction", "h": "INTRODUCE (verb) → INTRODUCTION (noun). INTRODUCT- + -ION (note spelling change). The act of bringing something new into use."},
+  {"id": "p3_039", "sent": "The company made an [UNWAVER] commitment to achieving carbon neutrality before the end of the decade.", "root": "UNWAVER", "a": "unwavering", "h": "UNWAVER → UNWAVERING. UN- (not) + WAVER (to be uncertain) + -ING (adjective). Steady, resolute, and never faltering."},
+  {"id": "p3_040", "sent": "The council faced serious criticism over the [TRANSPARENT] of its planning process.", "root": "TRANSPARENT", "a": "lack of transparency", "h": "TRANSPARENT → LACK OF TRANSPARENCY. TRANSPARENT → TRANSPARENCY (noun: -CY suffix). The council was not transparent, so: 'lack of transparency'. Note: 'opacity' is also possible."},
+  {"id": "p3_041", "sent": "The professor delivered a [COMPEL] lecture that kept the audience engaged from start to finish.", "root": "COMPEL", "a": "compelling", "h": "COMPEL (verb) → COMPELLING (adjective). COMPELL- + -ING (note double L). Evoking strong interest; difficult to ignore or look away from."},
+  {"id": "p3_042", "sent": "The [FAIL] of the local population to engage with the consultation process disappointed the planners.", "root": "FAIL", "a": "failure", "h": "FAIL (verb) → FAILURE (noun). Suffix -URE. 'The failure of someone to do X' = the fact that they did not do it."},
+  {"id": "p3_043", "sent": "She found the constant [CRITICISE] of her work by her manager both demoralising and counterproductive.", "root": "CRITICISE", "a": "criticism", "h": "CRITICISE (verb) → CRITICISM (noun). CRITIC- + -ISM. The act of finding fault — note the spelling: 'criticise' becomes 'criticism', not 'criticisation'."},
+  {"id": "p3_044", "sent": "The report called for greater [COLLABORATE] between government departments on environmental policy.", "root": "COLLABORATE", "a": "collaboration", "h": "COLLABORATE (verb) → COLLABORATION (noun). COLLABORAT- + -ION. The act of working together towards a shared goal."},
+  {"id": "p3_045", "sent": "The [THOROUGH] of her presentation impressed even the most sceptical members of the board.", "root": "THOROUGH", "a": "thoroughness", "h": "THOROUGH (adjective) → THOROUGHNESS (noun). THOROUGH + -NESS. The quality of being complete, careful, and missing nothing."},
+];
+const P4 = [
+  {"id": "t001", "orig": "I regret not applying for that job when I had the chance.", "key": "WISH", "before": "I wish I", "after": "that job when I had the chance.", "ans": "had applied for", "accept": ["had applied for"], "chunk1": "had applied", "chunk2": "for", "p1": "past perfect after wish (had applied)", "p2": "for (preposition — applied FOR a job)", "hint": "REGRET NOT APPLYING → WISH I HAD APPLIED FOR. Past perfect after 'wish I'. Don't forget 'for'."},
+  {"id": "t002", "orig": "It's a shame that we didn't book the hotel earlier.", "key": "ONLY", "before": "If", "after": "earlier!", "ans": "only we had booked the hotel", "accept": ["only we had booked the hotel"], "chunk1": "only we had", "chunk2": "booked the hotel", "p1": "If only + past perfect = past regret", "p2": "booked the hotel (past participle + object)", "hint": "IT'S A SHAME WE DIDN'T → IF ONLY WE HAD BOOKED. 'If only' + past perfect expresses regret."},
+  {"id": "t003", "orig": "The mechanic is repairing my car at the moment.", "key": "HAVING", "before": "I am", "after": "at the moment.", "ans": "having my car repaired", "accept": ["having my car repaired"], "chunk1": "having my car", "chunk2": "repaired", "p1": "having my car (causative structure)", "p2": "repaired \u2014 passive participle (not repairing)", "hint": "CAUSATIVE HAVE: 'have + object + past participle'. The car doesn't repair itself \u2014 someone else does it for you."},
+  {"id": "t004", "orig": "A professional photographer took our wedding photos.", "key": "HAD", "before": "We", "after": "by a professional photographer.", "ans": "had our wedding photos taken", "accept": ["had our wedding photos taken"], "chunk1": "had our wedding photos", "chunk2": "taken", "p1": "had our wedding photos (causative)", "p2": "taken \u2014 passive participle", "hint": "CAUSATIVE HAD: 'had + object + past participle'. Think about who arranged the action rather than doing it themselves."},
+  {"id": "t005", "orig": "They say that he was involved in the fraud.", "key": "ALLEGED", "before": "He is", "after": "in the fraud.", "ans": "alleged to have been involved", "accept": ["alleged to have been involved"], "chunk1": "alleged to", "chunk2": "have been involved", "p1": "alleged to (passive reporting verb)", "p2": "have been involved (perfect infinitive passive)", "hint": "PASSIVE REPORTING: 'alleged to + infinitive'. When the original says 'was involved', what form of the infinitive do you need?"},
+  {"id": "t006", "orig": "People believe that she is the best candidate for the role.", "key": "BELIEVED", "before": "She is believed", "after": "the role.", "ans": "to be the best candidate for", "accept": ["to be the best candidate for"], "chunk1": "to be", "chunk2": "the best candidate for", "p1": "to be (infinitive after passive reporting verb)", "p2": "the best candidate for (full phrase)", "hint": "PEOPLE BELIEVE SHE IS → SHE IS BELIEVED TO BE THE BEST CANDIDATE FOR. Passive reporting."},
+  {"id": "t007", "orig": "It seems that the documents were mislaid during the move.", "key": "APPEAR", "before": "The documents", "after": "during the move.", "ans": "appear to have been mislaid", "accept": ["appear to have been mislaid"], "chunk1": "appear to", "chunk2": "have been mislaid", "p1": "appear to (reporting verb)", "p2": "have been mislaid (perfect infinitive passive)", "hint": "PASSIVE REPORTING + PERFECT INFINITIVE PASSIVE: for a past event, use 'to have been + past participle'. Don't drop 'been'."},
+  {"id": "t008", "orig": "Experts say that the painting is a forgery.", "key": "THOUGHT", "before": "The painting", "after": "a forgery.", "ans": "is thought to be", "accept": ["is thought to be"], "chunk1": "is thought", "chunk2": "to be", "p1": "is thought (passive)", "p2": "to be (infinitive, not is/was)", "hint": "PASSIVE REPORTING: 'is thought to + infinitive'. The original says she IS a forgery \u2014 which infinitive form does that require?"},
+  {"id": "t009", "orig": "If you had told me earlier, I could have helped you.", "key": "TOLD", "before": "Had", "after": "I could have helped you.", "ans": "you told me earlier", "accept": ["you told me earlier"], "chunk1": "you told", "chunk2": "me earlier", "p1": "you told (inversion: Had you told = If you had told)", "p2": "me earlier (object + adverb)", "hint": "THIRD CONDITIONAL INVERSION: 'If + subject + had + past participle' becomes 'Had + subject + past participle'. The 'if' disappears."},
+  {"id": "t010", "orig": "If she had arrived on time, she wouldn't have missed the train.", "key": "ARRIVED", "before": "Had she", "after": "she wouldn't have missed the train.", "ans": "arrived on time", "accept": ["arrived on time"], "chunk1": "arrived", "chunk2": "on time", "p1": "arrived (past participle after 'Had she')", "p2": "on time (adverb phrase)", "hint": "THIRD CONDITIONAL INVERSION: 'Had she...' replaces 'If she had...'. What comes directly after 'Had she' to complete the condition?"},
+  {"id": "t011", "orig": "If it weren't for her support, I would have given up.", "key": "NOT", "before": "Were it", "after": "I would have given up.", "ans": "not for her support", "accept": ["not for her support"], "chunk1": "not for", "chunk2": "her support", "p1": "not for (were it not for = if it weren't for)", "p2": "her support", "hint": "FORMAL INVERSION: 'Were it not for' = 'If it weren't for'. What two words follow 'Were it' to express the condition?"},
+  {"id": "t012", "orig": "She speaks French so fluently she could pass for a native speaker.", "key": "SUCH", "before": "She has", "after": "she could pass for a native speaker.", "ans": "such fluent French that", "accept": ["such fluent French that"], "chunk1": "such fluent french", "chunk2": "that", "p1": "such fluent French (such + adj + noun)", "p2": "that (result clause \u2014 obligatory)", "hint": "SO + adverb \u2192 SUCH + adjective + noun + THAT. 'Speaks so fluently' becomes 'has such [adjective] [noun] that'. Include 'that'."},
+  {"id": "t013", "orig": "He is such a convincing liar that no one ever suspects him.", "key": "CONVINCINGLY", "before": "He lies so", "after": "suspects him.", "ans": "convincingly that no one ever", "accept": ["convincingly that no one ever"], "chunk1": "convincingly", "chunk2": "that no one ever", "p1": "convincingly (adverb not adjective)", "p2": "that no one ever (result clause)", "hint": "SUCH + noun \u2192 SO + adverb. What is the adverb form of 'convincing'? The 'that' clause must follow."},
+  {"id": "t014", "orig": "I had never visited such an impressive museum before.", "key": "WAS", "before": "It", "after": "I had ever visited.", "ans": "was the most impressive museum", "accept": ["was the most impressive museum"], "chunk1": "was the most impressive", "chunk2": "museum", "p1": "the most impressive (superlative, not more impressive)", "p2": "museum (noun, not one/building)", "hint": "SUPERLATIVE cleft: 'never such a + adj + noun' \u2192 'the most + adj + noun + subject + had ever + past participle'."},
+  {"id": "t015", "orig": "Although she was tired, she finished all the work.", "key": "DESPITE", "before": "She finished all the work", "after": "tired.", "ans": "despite being", "accept": ["despite being", "despite feeling"], "chunk1": "despite", "chunk2": "being", "p1": "despite (not in spite/although)", "p2": "being \u2014 gerund (not she was/having been)", "hint": "DESPITE + gerund: 'although + clause' \u2192 'despite + -ing'. The preposition 'despite' must be followed by a gerund."},
+  {"id": "t016", "orig": "Even though the weather was dreadful, we enjoyed the picnic.", "key": "SPITE", "before": "We enjoyed the picnic", "after": "weather.", "ans": "in spite of the dreadful", "accept": ["in spite of the dreadful", "in spite of the terrible", "in spite of the awful"], "chunk1": "in spite of", "chunk2": "the dreadful", "p1": "in spite of (not despite of/in spite that)", "p2": "the dreadful/terrible weather (noun phrase not clause)", "hint": "IN SPITE OF + noun phrase: 'even though + clause' \u2192 'in spite of + noun phrase'. A clause cannot follow 'in spite of'."},
+  {"id": "t017", "orig": "Despite working hard, she failed the exam.", "key": "MATTER", "before": "She failed the exam", "after": "worked.", "ans": "no matter how hard she", "accept": ["no matter how hard she"], "chunk1": "no matter", "chunk2": "how hard she", "p1": "no matter (fixed phrase)", "p2": "how hard she (word order)", "hint": "NO MATTER HOW + adjective/adverb + subject + verb: 'despite + gerund' becomes a concessive with 'no matter how'."},
+  {"id": "t018", "orig": "It was wrong of him to leave without saying goodbye.", "key": "HAVE", "before": "He should not", "after": "saying goodbye.", "ans": "have left without", "accept": ["have left without"], "chunk1": "have left", "chunk2": "without", "p1": "have left (perfect infinitive after should not)", "p2": "without (preposition)", "hint": "IT WAS WRONG → SHOULD NOT HAVE LEFT WITHOUT. Past modal criticism."},
+  {"id": "t019", "orig": "It was unnecessary for her to stay so late.", "key": "NEED", "before": "She", "after": "so late.", "ans": "needn't have stayed", "accept": ["needn't have stayed", "need not have stayed"], "chunk1": "needn't have", "chunk2": "stayed", "p1": "needn't have (past modal: unnecessary action done)", "p2": "stayed (past participle)", "hint": "NEEDN'T HAVE + past participle = did something unnecessary. She DID stay, but didn't need to. Different from 'didn't need to stay'."},
+  {"id": "t020", "orig": "I'm sure he didn't take the money \u2014 it's not like him.", "key": "HAVE", "before": "He can't", "after": "it's not like him.", "ans": "have taken the money,", "accept": ["have taken the money,", "have taken the money"], "chunk1": "have taken", "chunk2": "the money", "p1": "have taken (perfect infinitive after can't)", "p2": "the money (object)", "hint": "CAN'T HAVE + past participle = strong deduction that a past event didn't happen. What perfect infinitive follows 'can't have'?"},
+  {"id": "t021", "orig": "It's a pity I don't live closer to the city centre.", "key": "WISH", "before": "I", "after": "the city centre.", "ans": "wish I lived closer to", "accept": ["wish i lived closer to"], "chunk1": "wish i lived", "chunk2": "closer to", "p1": "wish I lived (present wish = past simple)", "p2": "closer to (comparative + preposition)", "hint": "WISH + past simple = wanting the present to be different. 'I don't live closer' \u2192 'I wish I [past simple] closer to...'"},
+  {"id": "t022", "orig": "I can't help you because I have too much work.", "key": "POSITION", "before": "I'm afraid I'm not in", "after": "help you.", "ans": "a position to", "accept": ["a position to"], "chunk1": "a position", "chunk2": "to", "p1": "not in a position to = formal way of saying unable to", "p2": "to (infinitive marker follows 'position')", "hint": "CAN'T HELP → NOT IN A POSITION TO HELP. Formal register expressing inability."},
+  {"id": "t023", "orig": "Someone broke into our house while we were on holiday.", "key": "HAD", "before": "We", "after": "while we were on holiday.", "ans": "had our house broken into", "accept": ["had our house broken into"], "chunk1": "had our house", "chunk2": "broken into", "p1": "had our house (causative/passive experience)", "p2": "broken into (phrasal verb in passive)", "hint": "PASSIVE EXPERIENCE with HAD: 'someone broke into X' \u2192 'had X broken into'. The phrasal verb 'broken into' must stay together."},
+  {"id": "t024", "orig": "It is difficult for me to concentrate when there is noise.", "key": "FIND", "before": "I", "after": "when there is noise.", "ans": "find it difficult to concentrate", "accept": ["find it difficult to concentrate"], "chunk1": "find it difficult", "chunk2": "to concentrate", "p1": "find it difficult (anticipatory it)", "p2": "to concentrate (infinitive not concentrating)", "hint": "ANTICIPATORY IT: 'it is difficult for me to' \u2192 'I find it difficult to'. Keep 'it' as a dummy object after 'find'."},
+  {"id": "t025", "orig": "Keeping up with current affairs is something I find very important.", "key": "IMPORTANCE", "before": "I attach great", "after": "with current affairs.", "ans": "importance to keeping up", "accept": ["importance to keeping up"], "chunk1": "importance to", "chunk2": "keeping up", "p1": "importance to (attach importance to = fixed phrase)", "p2": "keeping up (gerund not infinitive)", "hint": "ATTACH IMPORTANCE TO + gerund: a formal noun phrase. 'Find very important' \u2192 'attach great importance to'. What gerund follows?"},
+  {"id": "t026", "orig": "The manager forced all staff to work overtime.", "key": "MADE", "before": "All staff", "after": "overtime.", "ans": "were made to work", "accept": ["were made to work"], "chunk1": "were made", "chunk2": "to work", "p1": "were made (passive)", "p2": "to work (infinitive \u2014 obligatory after made passive)", "hint": "PASSIVE CAUSATIVE: in the passive 'made to do', the infinitive requires 'to' (unlike the active, which uses the bare infinitive)."},
+  {"id": "t027", "orig": "The loud noise prevented me from sleeping.", "key": "STOP", "before": "The loud noise", "after": "sleeping.", "ans": "stopped me from", "accept": ["stopped me from", "stopped me (from)"], "chunk1": "stopped me", "chunk2": "from", "p1": "stopped me (verb + object)", "p2": "from (preposition \u2014 stop from not stop to)", "hint": "STOP + object + FROM + gerund: 'prevent from' and 'stop from' are synonyms. What preposition follows 'stopped me'?"},
+  {"id": "t028", "orig": "Even if he had unlimited funds, he still wouldn't be satisfied.", "key": "MATTER", "before": "He wouldn't be satisfied", "after": "had.", "ans": "no matter how much money he", "accept": ["no matter how much money he"], "chunk1": "no matter", "chunk2": "how much money he", "p1": "no matter (concessive)", "p2": "how much money he (amount + subject)", "hint": "EVEN IF HE HAD → NO MATTER HOW MUCH MONEY HE HAD."},
+  {"id": "t029", "orig": "You can borrow the car, but only if you promise to drive carefully.", "key": "CONDITION", "before": "You can borrow the car", "after": "carefully.", "ans": "on condition that you drive", "accept": ["on condition that you drive"], "chunk1": "on condition that", "chunk2": "you drive", "p1": "on condition that (formal conditional)", "p2": "you drive (subject + verb)", "hint": "BUT ONLY IF → ON CONDITION THAT YOU DRIVE. Formal conditional phrase."},
+  {"id": "t030", "orig": "You can borrow my car, but make sure you fill up the tank.", "key": "LONG", "before": "You can borrow my car as long as", "after": "the tank.", "ans": "you fill up", "accept": ["you fill up"], "chunk1": "you fill", "chunk2": "up", "p1": "you (subject — part of the conditional clause)", "p2": "up (particle of phrasal verb fill up)", "hint": "AS LONG AS YOU FILL UP THE TANK. Phrasal verb 'fill up' must stay together."},
+  {"id": "t031", "orig": "I haven't seen him since the graduation ceremony.", "key": "LAST", "before": "The last time I saw him was", "after": ".", "ans": "at the graduation ceremony", "accept": ["at the graduation ceremony"], "chunk1": "at the", "chunk2": "graduation ceremony", "p1": "at (preposition for events and venues)", "p2": "graduation ceremony (full phrase)", "hint": "HAVEN'T SEEN SINCE → LAST TIME I SAW HIM WAS AT. Preposition 'at' for events."},
+  {"id": "t032", "orig": "The last time I visited Paris was three years ago.", "key": "SINCE", "before": "I", "after": "three years.", "ans": "haven't visited Paris for", "accept": ["haven't visited paris for", "have not visited paris for"], "chunk1": "haven't visited paris", "chunk2": "for", "p1": "haven't visited Paris (present perfect)", "p2": "for (duration not since/ago)", "hint": "PRESENT PERFECT + FOR: 'last time was ago' \u2192 'haven't + past participle + for + period'. 'Ago' always becomes 'for'."},
+  {"id": "t033", "orig": "The concert was cancelled because there was heavy snow.", "key": "DUE", "before": "The concert was cancelled", "after": "snow.", "ans": "due to the heavy", "accept": ["due to the heavy"], "chunk1": "due to", "chunk2": "the heavy", "p1": "due to (preposition not because of)", "p2": "the heavy (article + adjective)", "hint": "DUE TO + noun phrase: 'because there was heavy snow' \u2192 'due to the heavy [noun]'. Include the article."},
+  {"id": "t034", "orig": "The match was postponed because the pitch was waterlogged.", "key": "OWING", "before": "The match was postponed", "after": "being waterlogged.", "ans": "owing to the pitch", "accept": ["owing to the pitch"], "chunk1": "owing to", "chunk2": "the pitch", "p1": "owing to (formal preposition = because of)", "p2": "the pitch (definite article + noun)", "hint": "OWING TO + noun phrase + gerund: 'because the pitch was' \u2192 'owing to the pitch being'. Noun + gerund after the preposition."},
+  {"id": "t035", "orig": "She left early because she wanted to catch the last train.", "key": "ORDER", "before": "She left early", "after": "the last train.", "ans": "in order to catch", "accept": ["in order to catch"], "chunk1": "in order", "chunk2": "to catch", "p1": "in order (not in order for)", "p2": "to catch (infinitive, not catching)", "hint": "IN ORDER TO + infinitive = purpose. 'Because she wanted to catch X' \u2192 'in order to catch X'. Simple purpose clause."},
+  {"id": "t036", "orig": "She couldn't stop herself from laughing during the speech.", "key": "HELP", "before": "She", "after": "during the speech.", "ans": "couldn't help laughing", "accept": ["couldn't help laughing", "could not help laughing"], "chunk1": "couldn't help", "chunk2": "laughing", "p1": "couldn't help (can't help = can't stop)", "p2": "laughing (gerund not to laugh)", "hint": "CAN'T HELP + gerund = unable to stop doing. 'Couldn't stop herself from laughing' \u2192 'couldn't help...'. What verb form follows?"},
+  {"id": "t037", "orig": "I was forced to sign the contract because I had no alternative.", "key": "CHOICE", "before": "I had no", "after": "the contract.", "ans": "choice but to sign", "accept": ["choice but to sign"], "chunk1": "choice but", "chunk2": "to sign", "p1": "choice but (no choice but to = fixed)", "p2": "to sign (infinitive)", "hint": "NO CHOICE BUT TO + infinitive = forced to do. 'No alternative' \u2192 'no choice but to'. What infinitive completes the phrase?"},
+  {"id": "t038", "orig": "His resignation shocked everyone in the department.", "key": "TAKEN", "before": "Everyone in the department was", "after": "resignation.", "ans": "taken aback by his", "accept": ["taken aback by his"], "chunk1": "taken aback", "chunk2": "by his", "p1": "taken aback (fixed phrase \u2014 not taken back)", "p2": "by his (passive agent by, not with/at)", "hint": "TAKEN ABACK BY = shocked or surprised by. Passive idiom. What preposition introduces the cause after 'taken aback'?"},
+  {"id": "t039", "orig": "The news that she had won completely surprised her.", "key": "GUARD", "before": "The news that she had won caught her", "after": ".", "ans": "off guard", "accept": ["off guard"], "chunk1": "off", "chunk2": "guard", "p1": "off (preposition in 'catch off guard')", "p2": "guard (noun \u2014 fixed idiom)", "hint": "CATCH OFF GUARD = surprise when unprepared. Two words follow 'caught her' to complete the idiom."},
+  {"id": "t040", "orig": "It's not worth trying to persuade him; he won't change his mind.", "key": "POINT", "before": "There is no", "after": "him; he won't change his mind.", "ans": "point in trying to persuade", "accept": ["point in trying to persuade", "point trying to persuade"], "chunk1": "point in", "chunk2": "trying to persuade", "p1": "point in / point (no point in doing)", "p2": "trying to persuade (gerund phrase)", "hint": "NO POINT IN + gerund = not worth doing. 'Not worth trying to' \u2192 'no point in...' What gerund phrase follows?"},
+  {"id": "t041", "orig": "It's no use complaining \u2014 nothing will change.", "key": "WORTH", "before": "It is not", "after": "nothing will change.", "ans": "worth complaining,", "accept": ["worth complaining,", "worth complaining"], "chunk1": "worth", "chunk2": "complaining", "p1": "worth (it's not worth = no use)", "p2": "complaining (gerund not to complain)", "hint": "NOT WORTH + gerund = no use doing. 'No use complaining' \u2192 'not worth...'. What -ing form follows directly?"},
+  {"id": "t042", "orig": "The film was not as good as people had expected.", "key": "FALL", "before": "The film", "after": "expectations.", "ans": "fell short of", "accept": ["fell short of"], "chunk1": "fell short", "chunk2": "of", "p1": "fell short (not fell below/behind)", "p2": "of (preposition \u2014 fell short OF)", "hint": "FALL SHORT OF + noun = fail to meet. 'Not as good as expected' \u2192 'fell short of...'. What preposition follows 'fell short'?"},
+  {"id": "t043", "orig": "The holiday was a disappointment \u2014 it wasn't as good as we'd hoped.", "key": "LIVE", "before": "The holiday", "after": "expectations.", "ans": "didn't live up to", "accept": ["didn't live up to", "did not live up to"], "chunk1": "didn't live up", "chunk2": "to", "p1": "didn't live up (phrasal verb)", "p2": "to (preposition \u2014 live up TO)", "hint": "LIVE UP TO + noun = meet expectations. 'Wasn't as good as hoped' \u2192 'didn't live up to...'. What is the object?"},
+  {"id": "t044", "orig": "She doesn't mind whether we go by train or bus.", "key": "DIFFERENCE", "before": "It makes", "after": "whether we go.", "ans": "no difference to her", "accept": ["no difference to her"], "chunk1": "no difference", "chunk2": "to her", "p1": "no difference (not any difference)", "p2": "to her (not for her)", "hint": "MAKE NO DIFFERENCE TO: 'doesn't mind' \u2192 'makes no difference to'. The preposition is 'to', not 'for'."},
+  {"id": "t045", "orig": "Working night shifts was strange at first, but I've adapted.", "key": "USED", "before": "I have", "after": "night shifts.", "ans": "got used to working", "accept": ["got used to working"], "chunk1": "got used to", "chunk2": "working", "p1": "got used to (become accustomed)", "p2": "working (gerund not work/to work)", "hint": "GOT USED TO + gerund = became accustomed to. 'Adapted' \u2192 'got used to'. 'To' here is a preposition \u2014 it needs a gerund, not an infinitive."},
+  {"id": "t046", "orig": "She spent so long working abroad that she lost touch with old friends.", "key": "RESULT", "before": "Spending so long working abroad", "after": "old friends.", "ans": "resulted in her losing touch with", "accept": ["resulted in her losing touch with", "resulted in her losing touch with"], "chunk1": "resulted in her", "chunk2": "losing touch with", "p1": "result in + object + gerund", "p2": "losing touch with (gerund phrase — not 'losing touch of')", "hint": "SPENT SO LONG → RESULTED IN HER LOSING TOUCH WITH. Result in + object + gerund."},
+  {"id": "t047", "orig": "He worked so hard that he eventually collapsed from exhaustion.", "key": "RESULT", "before": "His overwork", "after": "from exhaustion.", "ans": "resulted in him collapsing", "accept": ["resulted in him collapsing", "resulted in his collapsing"], "chunk1": "resulted in", "chunk2": "him collapsing", "p1": "resulted in (phrasal verb)", "p2": "him/his collapsing (gerund with possessive/object)", "hint": "RESULT IN + object + gerund: 'worked so hard that he collapsed' \u2192 'resulted in him/his + gerund'. What gerund form do you need?"},
+  {"id": "t048", "orig": "No sooner had we sat down than the fire alarm went off.", "key": "IMMEDIATELY", "before": "The fire alarm went off", "after": "down.", "ans": "immediately after we had sat", "accept": ["immediately after we had sat", "immediately after we sat"], "chunk1": "immediately after", "chunk2": "we had sat", "p1": "immediately after (not immediately when)", "p2": "we had sat (past perfect)", "hint": "IMMEDIATELY AFTER + past perfect: 'no sooner had X than Y' \u2192 'immediately after + subject + had + past participle'."},
+  {"id": "t049", "orig": "It was only after she arrived home that she noticed her phone was missing.", "key": "NOT", "before": "She did", "after": "she arrived home.", "ans": "not notice until", "accept": ["not notice until", "not notice her phone was missing until"], "chunk1": "not notice", "chunk2": "until", "p1": "not + verb (negation of notice)", "p2": "until (time conjunction replacing 'only after')", "hint": "ONLY AFTER X THAT Y → DID NOT NOTICE UNTIL X. Simple negation + 'until'."},
+  {"id": "t050", "orig": "She had barely sat down when the phone rang.", "key": "SOONER", "before": "No sooner had she", "after": "the phone rang.", "ans": "sat down than", "accept": ["sat down than"], "chunk1": "sat down", "chunk2": "than", "p1": "sat down (past participle after 'had she')", "p2": "than (not when — critical: no sooner...than)", "hint": "BARELY SAT DOWN WHEN → NO SOONER HAD SHE SAT DOWN THAN. Critical: 'than' not 'when'."},
+  {"id": "t051", "orig": "I would prefer you not to mention this to anyone.", "key": "RATHER", "before": "I would rather you", "after": "this to anyone.", "ans": "didn't mention", "accept": ["didn't mention", "did not mention"], "chunk1": "didn't", "chunk2": "mention", "p1": "didn't (past subjunctive after would rather)", "p2": "mention (not say/tell — mention this to)", "hint": "PREFER YOU NOT TO MENTION → RATHER YOU DIDN'T MENTION. Past subjunctive."},
+  {"id": "t052", "orig": "I regret agreeing to help him \u2014 it took all weekend.", "key": "RATHER", "before": "I would", "after": "to help him.", "ans": "rather not have agreed", "accept": ["rather not have agreed"], "chunk1": "rather not have", "chunk2": "agreed", "p1": "rather not have (past regret: would rather not have)", "p2": "agreed (past participle)", "hint": "WOULD RATHER NOT HAVE + past participle = past regret. 'I regret agreeing' \u2192 'I would rather not have...'. What past participle?"},
+  {"id": "t053", "orig": "People say that the company has been cutting corners on safety.", "key": "SAID", "before": "The company is said to", "after": "corners on safety.", "ans": "have been cutting", "accept": ["have been cutting"], "chunk1": "have been", "chunk2": "cutting", "p1": "have been (perfect continuous infinitive)", "p2": "cutting (continuous aspect — not cut)", "hint": "PEOPLE SAY IT HAS BEEN CUTTING → IS SAID TO HAVE BEEN CUTTING. Perfect continuous infinitive."},
+  {"id": "t054", "orig": "She arrived at the theatre after the performance had started.", "key": "TIME", "before": "By the", "after": "had already started.", "ans": "time she arrived, the performance", "accept": ["time she arrived, the performance", "time she arrived the performance"], "chunk1": "time she arrived", "chunk2": "the performance", "p1": "time she arrived (by the time + past simple)", "p2": "the performance (subject of main clause)", "hint": "BY THE TIME + past simple \u2192 past perfect in main clause. What is the subject of the second clause that 'had already started'?"},
+  {"id": "t055", "orig": "Nobody has used this equipment for over a year.", "key": "OUT", "before": "This equipment has been", "after": "over a year.", "ans": "out of use for", "accept": ["out of use for", "out of action for"], "chunk1": "out of use", "chunk2": "for", "p1": "out of use/action (fixed phrase)", "p2": "for (duration not since/in)", "hint": "OUT OF USE/ACTION + FOR: 'nobody has used it' \u2192 'has been out of [noun phrase] for'. What noun phrase means not being used?"},
+  {"id": "t056", "orig": "The repairs will cost more than we can afford.", "key": "BEYOND", "before": "The cost of the repairs is", "after": ".", "ans": "beyond our means", "accept": ["beyond our means"], "chunk1": "beyond", "chunk2": "our means", "p1": "beyond (not above/outside)", "p2": "our means (financial capacity \u2014 fixed phrase)", "hint": "BEYOND ONE'S MEANS = too expensive to afford. Fixed idiom. What possessive determiner completes 'beyond...'?"},
+  {"id": "t057", "orig": "The queue was so long that we decided to leave.", "key": "SUCH", "before": "It was", "after": "we decided to leave.", "ans": "such a long queue that", "accept": ["such a long queue that"], "chunk1": "such a long queue", "chunk2": "that", "p1": "such a long queue (such + a + adj + noun)", "p2": "that (result clause)", "hint": "SUCH + article + adjective + noun + THAT: 'so + adjective + that' \u2192 'such a + adjective + noun + that'. Include the article 'a'."},
+  {"id": "t058", "orig": "She was so exhausted after the marathon that she slept for twelve hours.", "key": "SUCH", "before": "She was in", "after": "she slept for twelve hours.", "ans": "such a state of exhaustion that", "accept": ["such a state of exhaustion that"], "chunk1": "such a state of", "chunk2": "exhaustion that", "p1": "such + a + noun phrase (state of exhaustion)", "p2": "that (result clause — obligatory)", "hint": "SO EXHAUSTED → IN SUCH A STATE OF EXHAUSTION THAT. Tests 'such a state of X that' — noun phrase variant."},
+  {"id": "t059", "orig": "The builders were expected to finish the project by June.", "key": "SUPPOSED", "before": "The builders", "after": "the project by June.", "ans": "were supposed to finish", "accept": ["were supposed to finish"], "chunk1": "were supposed", "chunk2": "to finish", "p1": "were supposed (past passive)", "p2": "to finish (infinitive)", "hint": "WERE SUPPOSED TO + infinitive = a formal synonym of 'were expected to'. Passive modal \u2014 same infinitive follows."},
+  {"id": "t060", "orig": "She insisted that everyone should submit their reports by Friday.", "key": "INSISTED", "before": "She", "after": "their reports by Friday.", "ans": "insisted on everyone submitting", "accept": ["insisted on everyone submitting", "insisted on everybody submitting"], "chunk1": "insisted on", "chunk2": "everyone submitting", "p1": "insisted on (insist on + gerund)", "p2": "everyone submitting (possessive/object + gerund)", "hint": "INSIST ON + object + gerund: 'insisted that everyone should submit' \u2192 'insisted on everyone/everybody + gerund'. Preposition 'on' requires a gerund."},
+  {"id": "t061", "orig": "The council decided not to build any more car parks in the city centre.", "key": "DECISION", "before": "The council", "after": "any more car parks in the city centre.", "ans": "made the decision not to build", "accept": ["made the decision not to build"], "chunk1": "made the decision", "chunk2": "not to build", "p1": "made the decision (collocation: make a decision)", "p2": "not to build (negative infinitive)", "hint": "DECIDED NOT TO → MADE THE DECISION NOT TO BUILD. Nominalisation of verb 'decide'."},
+  {"id": "t062", "orig": "The new drug proved to be less effective than expected.", "key": "OUT", "before": "The new drug turned", "after": "less effective than expected.", "ans": "out to be", "accept": ["out to be"], "chunk1": "out to", "chunk2": "be", "p1": "out to (phrasal verb: turn out to)", "p2": "be (infinitive — not been/being)", "hint": "PROVED TO BE → TURNED OUT TO BE. Direct phrasal verb synonym."},
+  {"id": "t063", "orig": "She is not only a talented musician but also an accomplished painter.", "key": "ADDITION", "before": "In", "after": "a talented musician, she is also an accomplished painter.", "ans": "addition to being", "accept": ["addition to being"], "chunk1": "addition to", "chunk2": "being", "p1": "addition to (in addition to = as well as)", "p2": "being (gerund not she is/to be)", "hint": "IN ADDITION TO + gerund: 'not only X but also Y' \u2192 'in addition to being X'. The preposition 'to' must be followed by a gerund."},
+  {"id": "t064", "orig": "My advice would be to book early to avoid disappointment.", "key": "STRONGLY", "before": "I would", "after": "early to avoid disappointment.", "ans": "strongly advise you to book", "accept": ["strongly advise you to book"], "chunk1": "strongly advise you", "chunk2": "to book", "p1": "strongly advise you (advise + object, not recommend you to)", "p2": "to book (infinitive)", "hint": "STRONGLY ADVISE + object + TO + infinitive: 'my advice would be to' \u2192 'I would strongly advise you to'. Object is required."},
+  {"id": "t065", "orig": "She can't afford a new car, and she definitely can't afford a sports car.", "key": "ALONE", "before": "She can't afford a new car,", "after": "a sports car.", "ans": "let alone", "accept": ["let alone"], "chunk1": "let", "chunk2": "alone", "p1": "let (part of fixed phrase)", "p2": "alone (let alone = never mind/much less)", "hint": "LET ALONE = not to mention, much less. Fixed phrase used to intensify a negative: can't afford X, let alone Y (the more extreme one)."},
+  {"id": "t066", "orig": "The concert was just starting when we arrived.", "key": "ABOUT", "before": "The concert was", "after": "when we arrived.", "ans": "about to start", "accept": ["about to start", "about to begin"], "chunk1": "about to", "chunk2": "start", "p1": "about to (be on the verge of)", "p2": "start/begin (infinitive)", "hint": "ABOUT TO + infinitive = on the verge of doing. 'Was just starting' \u2192 'was about to'. Present continuous \u2192 'about to + infinitive'."},
+  {"id": "t067", "orig": "When I was young, I walked to school every day.", "key": "USED", "before": "I", "after": "to school every day when I was young.", "ans": "used to walk", "accept": ["used to walk"], "chunk1": "used to", "chunk2": "walk", "p1": "used to (past habit discontinued)", "p2": "walk (bare infinitive — not walking/to walk)", "hint": "WALKED (past habit) → USED TO WALK. Discontinued past habit uses 'used to + bare infinitive'."},
+  {"id": "t068", "orig": "The organisation gave financial help to the families affected.", "key": "PROVIDED", "before": "The organisation", "after": "the families affected.", "ans": "provided financial assistance to", "accept": ["provided financial assistance to", "provided financial support to"], "chunk1": "provided financial assistance", "chunk2": "to", "p1": "provided financial assistance/support (not gave help)", "p2": "to (not for/with)", "hint": "PROVIDED + noun + TO: 'gave help to' \u2192 'provided [formal noun] to'. What more formal noun replaces 'help'? And which preposition follows?"},
+  {"id": "t069", "orig": "He behaved badly, which made it seem like he didn't care.", "key": "IF", "before": "He behaved", "after": "didn't care.", "ans": "as if he", "accept": ["as if he"], "chunk1": "as if", "chunk2": "he", "p1": "as if (not as like/like)", "p2": "he (subject of subordinate clause)", "hint": "AS IF + past simple = unreal comparison. 'Made it seem like he didn't care' \u2192 'behaved as if he...' Same tense."},
+  {"id": "t070", "orig": "I think the government should take action on this immediately.", "key": "TIME", "before": "It is", "after": "action on this.", "ans": "high time the government took", "accept": ["high time the government took"], "chunk1": "high time", "chunk2": "the government took", "p1": "high time (it's high time = overdue)", "p2": "the government took (past subjunctive)", "hint": "HIGH TIME + past subjunctive: 'should take action' \u2192 'it is high time + subject + past simple'. The past simple here is a subjunctive."},
+];
+
+const P5 = [
+  {"id": "pv001", "sent": "The journalist's investigation brought about a complete overhaul of the planning regulations.", "pv": "brought about", "opts": ["A: delayed", "B: caused to happen", "C: reported on", "D: argued against"], "a": "B", "h": "BRING ABOUT = cause something to happen, especially a significant change. It always implies the change was caused by deliberate action."},
+  {"id": "pv002", "sent": "She was brought up to believe that education was the key to a better life.", "pv": "brought up", "opts": ["A: encouraged", "B: taught formally", "C: raised and instilled with values", "D: persuaded"], "a": "C", "h": "BRING UP (a child) = raise, instil values during childhood. Different from 'bring up' meaning 'mention a topic'."},
+  {"id": "pv003", "sent": "The new management team brought in a series of radical cost-cutting measures.", "pv": "brought in", "opts": ["A: removed", "B: officially introduced", "C: debated", "D: rejected"], "a": "B", "h": "BRING IN = officially introduce a law, rule, or policy. Often used for legislation and workplace changes."},
+  {"id": "pv004", "sent": "Her autobiography brought back painful memories of her difficult childhood.", "pv": "brought back", "opts": ["A: returned", "B: reintroduced", "C: caused to be remembered", "D: revived"], "a": "C", "h": "BRING BACK = cause memories or feelings to return to mind. Note: also means 'reintroduce' in a different context."},
+  {"id": "pv005", "sent": "The crisis brought out the best in people, with communities rallying to support one another.", "pv": "brought out", "opts": ["A: removed", "B: revealed or caused to appear", "C: published", "D: celebrated"], "a": "B", "h": "BRING OUT = reveal a quality that was previously hidden, or cause it to appear. 'Bring out the best/worst in someone.'"},
+  {"id": "pv006", "sent": "The union called off the strike after reaching a last-minute agreement with management.", "pv": "called off", "opts": ["A: postponed", "B: cancelled", "C: ended early", "D: announced"], "a": "B", "h": "CALL OFF = cancel something that had been planned. Stronger than 'postpone' — it means it won't happen at all."},
+  {"id": "pv007", "sent": "The government was called upon to explain its handling of the financial crisis.", "pv": "called upon", "opts": ["A: criticised", "B: formally requested or asked", "C: blamed", "D: questioned"], "a": "B", "h": "CALL UPON = formally ask or request someone to do something. More formal than 'ask'; used in official or public contexts."},
+  {"id": "pv008", "sent": "Critics called into question the reliability of the data used in the report.", "pv": "called into question", "opts": ["A: debated", "B: cast doubt on", "C: rejected entirely", "D: examined carefully"], "a": "B", "h": "CALL INTO QUESTION = cause something to be doubted or challenged. Fixed phrase — always 'call X into question'."},
+  {"id": "pv009", "sent": "Despite the setbacks, the research team carried on with their work throughout the winter.", "pv": "carried on", "opts": ["A: finished", "B: continued", "C: struggled", "D: improved"], "a": "B", "h": "CARRY ON = continue doing something, especially despite difficulties. More informal than 'continue' but common at C1."},
+  {"id": "pv010", "sent": "The recommendations of the report were fully carried out by the new administration.", "pv": "carried out", "opts": ["A: discussed", "B: rejected", "C: implemented or completed", "D: published"], "a": "C", "h": "CARRY OUT = implement, complete or perform a task, instruction or plan. Standard formal collocation."},
+  {"id": "pv011", "sent": "Her passion for justice carried her through the most difficult periods of the legal battle.", "pv": "carried through", "opts": ["A: transported", "B: sustained or helped to survive", "C: completed", "D: strengthened"], "a": "B", "h": "CARRY THROUGH = sustain someone during a difficult period, or bring something to a successful conclusion."},
+  {"id": "pv012", "sent": "A solution to the funding crisis finally came about after months of negotiation.", "pv": "came about", "opts": ["A: was discussed", "B: happened or developed", "C: was discovered", "D: was proposed"], "a": "B", "h": "COME ABOUT = happen or develop, often gradually or unexpectedly. Describes how a situation arose."},
+  {"id": "pv013", "sent": "The missing documents came to light during a routine audit of the company's finances.", "pv": "came to light", "opts": ["A: were found by chance", "B: became known or were revealed", "C: were returned", "D: were confirmed"], "a": "B", "h": "COME TO LIGHT = become known, especially something that was previously hidden or unknown."},
+  {"id": "pv014", "sent": "Several unexpected complications came up during the planning phase of the project.", "pv": "came up", "opts": ["A: were noticed", "B: arose or occurred unexpectedly", "C: were discussed", "D: were solved"], "a": "B", "h": "COME UP = arise or occur, especially unexpectedly. Often used for problems, issues, or topics that appear."},
+  {"id": "pv015", "sent": "Despite initial optimism, the scheme did not come up to the expectations of investors.", "pv": "come up to", "opts": ["A: reach", "B: meet or match a standard", "C: approach", "D: exceed"], "a": "B", "h": "COME UP TO = reach or match a required standard or level. Often used negatively: 'didn't come up to expectations'."},
+  {"id": "pv016", "sent": "The accused came across as calm and confident throughout the trial.", "pv": "came across", "opts": ["A: behaved", "B: was perceived or seemed", "C: appeared physically", "D: spoke"], "a": "B", "h": "COME ACROSS (as) = give a particular impression to others. How you seem or appear to other people."},
+  {"id": "pv017", "sent": "She came into a considerable fortune when her aunt passed away.", "pv": "came into", "opts": ["A: earned", "B: inherited or received", "C: discovered", "D: invested"], "a": "B", "h": "COME INTO (money/a fortune) = inherit or receive money or property. Fixed phrase with financial contexts."},
+  {"id": "pv018", "sent": "The new legislation cut across party lines, with politicians from all sides voting in favour.", "pv": "cut across", "opts": ["A: divided", "B: ignored", "C: went beyond or transcended", "D: affected"], "a": "C", "h": "CUT ACROSS = go beyond usual boundaries or divisions. When something applies to multiple groups that normally disagree."},
+  {"id": "pv019", "sent": "The funding cuts meant the charity had to cut back on the services it offered.", "pv": "cut back on", "opts": ["A: improve", "B: reduce the amount of", "C: change", "D: stop completely"], "a": "B", "h": "CUT BACK ON = reduce the amount, size or cost of something. Less extreme than stopping entirely."},
+  {"id": "pv020", "sent": "Her microphone cut out just as she was about to announce the winner.", "pv": "cut out", "opts": ["A: broke", "B: stopped working suddenly", "C: was removed", "D: failed gradually"], "a": "B", "h": "CUT OUT = stop working suddenly (for a machine, engine, or electrical device). Always sudden, not gradual."},
+  {"id": "pv021", "sent": "The lengthy court case drew on the resources of both legal teams considerably.", "pv": "drew on", "opts": ["A: depended on", "B: used up or made use of", "C: extended", "D: highlighted"], "a": "B", "h": "DRAW ON = make use of a source, skill, or resource. Often implies drawing on experience, funds, or creativity."},
+  {"id": "pv022", "sent": "The police drew up a detailed plan for managing the crowd at the event.", "pv": "drew up", "opts": ["A: presented", "B: prepared or formulated formally", "C: published", "D: discussed"], "a": "B", "h": "DRAW UP = prepare or write a formal document, plan, or agreement. Always implies a formal, written output."},
+  {"id": "pv023", "sent": "The case drew out over several months, exhausting both parties involved.", "pv": "drew out", "opts": ["A: attracted", "B: became unnecessarily long", "C: revealed", "D: concluded"], "a": "B", "h": "DRAW OUT = make something last longer than necessary, or cause a process to be prolonged."},
+  {"id": "pv024", "sent": "Sales fell off sharply in the final quarter of the year due to consumer uncertainty.", "pv": "fell off", "opts": ["A: decreased", "B: dropped suddenly and significantly", "C: collapsed", "D: were reported"], "a": "B", "h": "FALL OFF = decrease, especially sharply or notably. Often used for sales, demand, attendance, or standards."},
+  {"id": "pv025", "sent": "The deal fell through at the last minute when the buyer withdrew their offer.", "pv": "fell through", "opts": ["A: was rejected", "B: failed to happen as planned", "C: was renegotiated", "D: collapsed financially"], "a": "B", "h": "FALL THROUGH = fail to happen, especially a deal, plan, or arrangement. Always implies complete failure."},
+  {"id": "pv026", "sent": "The scheme fell foul of strict data protection regulations and had to be abandoned.", "pv": "fell foul of", "opts": ["A: was criticised by", "B: came into conflict with", "C: was investigated by", "D: was rejected by"], "a": "B", "h": "FALL FOUL OF = come into conflict with a rule, law, or person; get into trouble because of something."},
+  {"id": "pv027", "sent": "Responsibility for the error fell squarely on the shoulders of the project manager.", "pv": "fell on", "opts": ["A: was blamed on", "B: became the responsibility of", "C: was reported to", "D: was noticed by"], "a": "B", "h": "FALL ON (someone) = become the responsibility or burden of a particular person. Often used with 'responsibility' or 'burden'."},
+  {"id": "pv028", "sent": "It took years before she got over the trauma of losing her business.", "pv": "got over", "opts": ["A: forgot", "B: recovered from", "C: accepted", "D: moved away from"], "a": "B", "h": "GET OVER = recover from something difficult — an illness, loss, shock, or disappointment."},
+  {"id": "pv029", "sent": "The committee got around the legal restriction by redefining the terms of the contract.", "pv": "got around", "opts": ["A: discussed", "B: found a way to avoid", "C: challenged", "D: publicised"], "a": "B", "h": "GET AROUND = find a way to avoid or overcome a rule, restriction, or problem without directly confronting it."},
+  {"id": "pv030", "sent": "The message that the company was struggling to survive finally got through to shareholders.", "pv": "got through to", "opts": ["A: was communicated to", "B: was understood by", "C: reached", "D: was accepted by"], "a": "B", "h": "GET THROUGH TO = succeed in making someone understand something. Implies the communication was difficult."},
+  {"id": "pv031", "sent": "She got away with submitting the report late because her manager was on leave.", "pv": "got away with", "opts": ["A: escaped", "B: succeeded in avoiding punishment for", "C: benefited from", "D: managed to do"], "a": "B", "h": "GET AWAY WITH = avoid punishment or negative consequences for something wrong or against the rules."},
+  {"id": "pv032", "sent": "After hours of negotiation, the management gave in to the union's demands.", "pv": "gave in", "opts": ["A: agreed", "B: surrendered or yielded", "C: responded", "D: compromised"], "a": "B", "h": "GIVE IN = surrender or stop resisting; yield to pressure or demands. Similar to 'give way' but more personal."},
+  {"id": "pv033", "sent": "The company gave up trying to enter the Asian market after three unsuccessful attempts.", "pv": "gave up", "opts": ["A: decided", "B: stopped trying", "C: failed", "D: withdrew"], "a": "B", "h": "GIVE UP = stop doing something, especially because it's too difficult. Implies a definitive end to the effort."},
+  {"id": "pv034", "sent": "The scandal gave rise to calls for a thorough reform of the electoral system.", "pv": "gave rise to", "opts": ["A: caused or led to", "B: highlighted", "C: resulted from", "D: was connected to"], "a": "A", "h": "GIVE RISE TO = cause something to happen or develop, especially something abstract like a controversy or movement."},
+  {"id": "pv035", "sent": "The minister held back information that could have been crucial to the investigation.", "pv": "held back", "opts": ["A: destroyed", "B: kept secret or refused to reveal", "C: delayed", "D: lost"], "a": "B", "h": "HOLD BACK = deliberately not reveal or share information. Also means to prevent progress or restrain someone."},
+  {"id": "pv036", "sent": "Progress on the construction project was held up by a series of planning disputes.", "pv": "held up", "opts": ["A: supported", "B: delayed or obstructed", "C: halted permanently", "D: slowed"], "a": "B", "h": "HOLD UP = delay or obstruct progress. Note: also means 'rob' in a different context, so the sentence matters."},
+  {"id": "pv037", "sent": "The theory has held up well under scrutiny from the wider scientific community.", "pv": "held up", "opts": ["A: been defended", "B: remained valid or strong", "C: been supported", "D: been published"], "a": "B", "h": "HOLD UP (under scrutiny/criticism) = remain valid or strong when tested or examined. A different meaning from 'delay'."},
+  {"id": "pv038", "sent": "Analysts are looking to a recovery in consumer spending to drive economic growth.", "pv": "looking to", "opts": ["A: expecting", "B: relying on or hoping for", "C: predicting", "D: planning for"], "a": "B", "h": "LOOK TO = rely on or expect something to provide what is needed. Often followed by a noun or gerund."},
+  {"id": "pv039", "sent": "The board is looking into allegations of financial misconduct at the company.", "pv": "looking into", "opts": ["A: reading about", "B: investigating", "C: discussing", "D: ignoring"], "a": "B", "h": "LOOK INTO = investigate or examine something carefully. Used for formal or official investigations."},
+  {"id": "pv040", "sent": "She looked back on her years in the diplomatic service with great fondness.", "pv": "looked back on", "opts": ["A: reviewed", "B: reflected on or thought about the past", "C: remembered", "D: regretted"], "a": "B", "h": "LOOK BACK ON = reflect on a past period or experience. Implies distance in time and a degree of contemplation."},
+  {"id": "pv041", "sent": "It was difficult to make out what she was trying to say through the poor telephone connection.", "pv": "make out", "opts": ["A: understand", "B: hear or see clearly enough to understand", "C: interpret", "D: decode"], "a": "B", "h": "MAKE OUT = manage to hear, see or understand something with difficulty. Implies the challenge of perception."},
+  {"id": "pv042", "sent": "The press release made out that the company had been fully transparent throughout.", "pv": "made out", "opts": ["A: proved", "B: claimed or portrayed, often misleadingly", "C: stated", "D: confirmed"], "a": "B", "h": "MAKE OUT (that) = claim or suggest something, often implying the claim is exaggerated or misleading."},
+  {"id": "pv043", "sent": "The new director is determined to make up for the years of underinvestment in staff training.", "pv": "make up for", "opts": ["A: explain", "B: compensate for", "C: correct", "D: report on"], "a": "B", "h": "MAKE UP FOR = compensate for a loss, mistake, or period of neglect. Implies actively correcting an imbalance."},
+  {"id": "pv044", "sent": "The minister put forward a series of proposals aimed at reducing carbon emissions.", "pv": "put forward", "opts": ["A: introduced", "B: suggested or proposed formally", "C: defended", "D: published"], "a": "B", "h": "PUT FORWARD = suggest or propose an idea, plan, or candidate formally. Often used in professional or political contexts."},
+  {"id": "pv045", "sent": "Many residents put up with years of noise pollution before the factory was finally closed.", "pv": "put up with", "opts": ["A: complained about", "B: tolerated", "C: opposed", "D: ignored"], "a": "B", "h": "PUT UP WITH = tolerate something unpleasant without complaining. Implies endurance over time."},
+  {"id": "pv046", "sent": "The board put off making a decision until a full financial review had been completed.", "pv": "put off", "opts": ["A: cancelled", "B: delayed or postponed", "C: avoided", "D: refused"], "a": "B", "h": "PUT OFF = postpone or delay. Unlike 'cancel', it implies the thing will happen eventually, just not now."},
+  {"id": "pv047", "sent": "The experience put her off applying for similar positions in the future.", "pv": "put off", "opts": ["A: discouraged", "B: prevented", "C: stopped", "D: warned"], "a": "A", "h": "PUT OFF (someone) = discourage or cause someone to lose interest or enthusiasm. A different meaning from 'postpone'."},
+  {"id": "pv048", "sent": "The charity's operating costs have run up considerably since they expanded their services.", "pv": "run up", "opts": ["A: increased rapidly", "B: accumulated", "C: become unmanageable", "D: been reported"], "a": "B", "h": "RUN UP = accumulate a large amount of something, especially costs, debts, or bills, over time."},
+  {"id": "pv049", "sent": "The negotiations ran into serious difficulties when both sides refused to compromise.", "pv": "ran into", "opts": ["A: faced unexpectedly", "B: encountered or experienced", "C: created", "D: caused"], "a": "B", "h": "RUN INTO = encounter or experience problems, difficulties, or opposition unexpectedly."},
+  {"id": "pv050", "sent": "Time is running out for the government to reach a deal before the deadline.", "pv": "running out", "opts": ["A: being wasted", "B: decreasing and nearly gone", "C: passing", "D: being lost"], "a": "B", "h": "RUN OUT = be used up or come to an end. 'Time is running out' = there is very little time left."},
+  {"id": "pv051", "sent": "The scandal set back efforts to rebuild public trust in the institution by years.", "pv": "set back", "opts": ["A: delayed or hindered", "B: damaged", "C: reversed", "D: prevented"], "a": "A", "h": "SET BACK = delay or hinder progress. Can also refer to a specific 'setback' (noun form) in a process."},
+  {"id": "pv052", "sent": "The documentary set out to challenge widely held assumptions about urban poverty.", "pv": "set out", "opts": ["A: managed", "B: aimed or intended", "C: began", "D: tried"], "a": "B", "h": "SET OUT TO = have as one's aim or intention from the beginning. 'Set out to do X' = began with the purpose of doing X."},
+  {"id": "pv053", "sent": "The committee was set up specifically to oversee the implementation of the new policy.", "pv": "set up", "opts": ["A: created or established", "B: empowered", "C: instructed", "D: selected"], "a": "A", "h": "SET UP = create or establish an organisation, system, or arrangement. Very common in formal/institutional contexts."},
+  {"id": "pv054", "sent": "The compromise proposal stood out as the most viable solution on the table.", "pv": "stood out", "opts": ["A: was noticed", "B: was clearly better or more noticeable", "C: was selected", "D: was supported"], "a": "B", "h": "STAND OUT = be noticeably better, more impressive, or more distinctive than others."},
+  {"id": "pv055", "sent": "The minister stood by her decision despite intense criticism from all sides.", "pv": "stood by", "opts": ["A: defended", "B: refused to change", "C: continued to support", "D: explained"], "a": "C", "h": "STAND BY = continue to support a decision, person, or statement, especially under pressure."},
+  {"id": "pv056", "sent": "It took a while for the new employees to take in all the information from the training session.", "pv": "take in", "opts": ["A: note", "B: absorb or fully understand", "C: learn", "D: remember"], "a": "B", "h": "TAKE IN = fully absorb, understand, or process information, especially when there is a lot of it."},
+  {"id": "pv057", "sent": "The opposition took up the issue of housing affordability in the parliamentary debate.", "pv": "took up", "opts": ["A: raised or addressed", "B: began discussing", "C: challenged", "D: used"], "a": "A", "h": "TAKE UP = raise or begin to address an issue. Also means 'occupy time/space' or 'begin a hobby' in other contexts."},
+  {"id": "pv058", "sent": "The board took on additional staff to cope with the increased workload.", "pv": "took on", "opts": ["A: employed", "B: confronted", "C: acquired", "D: challenged"], "a": "A", "h": "TAKE ON = employ or hire new staff. Also means 'accept a responsibility' or 'confront' in different contexts."},
+  {"id": "pv059", "sent": "The new CEO has taken over a company that is heavily in debt.", "pv": "taken over", "opts": ["A: been given", "B: assumed control of", "C: purchased", "D: inherited"], "a": "B", "h": "TAKE OVER = assume control of a company, position, or responsibility, often from someone else."},
+  {"id": "pv060", "sent": "She took the criticism on board and revised her approach accordingly.", "pv": "took on board", "opts": ["A: accepted and considered seriously", "B: agreed with", "C: noted", "D: discussed"], "a": "A", "h": "TAKE ON BOARD = accept and seriously consider feedback, a criticism, or a suggestion. Implies acting on it."},
+  {"id": "pv061", "sent": "The evening turned out to be far more successful than anyone had dared to hope.", "pv": "turned out", "opts": ["A: ended", "B: proved to be or resulted in", "C: became", "D: was revealed"], "a": "B", "h": "TURN OUT (to be) = prove to be, or result in a particular way. Often used when the outcome was surprising."},
+  {"id": "pv062", "sent": "The government has turned a blind eye to the growing problem of corruption in local authorities.", "pv": "turned a blind eye to", "opts": ["A: investigated", "B: deliberately ignored", "C: denied", "D: dismissed"], "a": "B", "h": "TURN A BLIND EYE TO = deliberately ignore something you know is wrong. Fixed idiom — the phrasing is always the same."},
+  {"id": "pv063", "sent": "The local community turned against the development project after the environmental report was published.", "pv": "turned against", "opts": ["A: protested", "B: changed to opposing", "C: rejected", "D: criticised"], "a": "B", "h": "TURN AGAINST = change from supporting to opposing someone or something. Implies a reversal of attitude."},
+  {"id": "pv064", "sent": "The inquiry wound up after six months without reaching a definitive conclusion.", "pv": "wound up", "opts": ["A: was stopped", "B: came to an end", "C: was abandoned", "D: failed"], "a": "B", "h": "WIND UP = come to an end, or bring something to an end. Also used for companies going out of business."},
+  {"id": "pv065", "sent": "The details of the new contract were worked out after a series of tough negotiations.", "pv": "worked out", "opts": ["A: agreed upon", "B: calculated or resolved through discussion", "C: signed", "D: presented"], "a": "B", "h": "WORK OUT = resolve, calculate, or figure out something through effort or negotiation."},
+  {"id": "pv066", "sent": "The protestors' demands were brushed aside by the government without any formal response.", "pv": "brushed aside", "opts": ["A: rejected politely", "B: dismissed without serious consideration", "C: refused", "D: debated"], "a": "B", "h": "BRUSH ASIDE = dismiss or refuse to consider something seriously. Implies the dismissal was casual or contemptuous."},
+  {"id": "pv067", "sent": "The merger talks broke down after the two companies failed to agree on a fair valuation.", "pv": "broke down", "opts": ["A: ended in disagreement", "B: failed completely", "C: were cancelled", "D: were postponed"], "a": "B", "h": "BREAK DOWN = fail completely, especially negotiations, relationships, or communications."},
+  {"id": "pv068", "sent": "The new regulations are expected to phase out the use of single-use plastics by 2030.", "pv": "phase out", "opts": ["A: ban suddenly", "B: reduce and eliminate gradually", "C: stop", "D: replace"], "a": "B", "h": "PHASE OUT = gradually reduce and eventually eliminate something over a period of time."},
+  {"id": "pv069", "sent": "The prime minister's comments sparked off a fierce debate about immigration policy.", "pv": "sparked off", "opts": ["A: started", "B: caused to begin suddenly", "C: encouraged", "D: provoked"], "a": "B", "h": "SPARK OFF = cause something to begin suddenly — especially a debate, conflict, or controversy."},
+  {"id": "pv070", "sent": "The opposition party is pressing ahead with its plans to reform the tax system.", "pv": "pressing ahead", "opts": ["A: continuing despite difficulties", "B: hurrying", "C: planning", "D: publishing"], "a": "A", "h": "PRESS AHEAD (with) = continue with a plan despite difficulties, opposition, or delays."},
+  {"id": "pv071", "sent": "The documentary glossed over some of the most controversial aspects of the politician's record.", "pv": "glossed over", "opts": ["A: avoided", "B: treated superficially or failed to examine", "C: denied", "D: mentioned briefly"], "a": "B", "h": "GLOSS OVER = treat something superficially, intentionally avoiding difficult or embarrassing details."},
+  {"id": "pv072", "sent": "The strike dragged on for three weeks before an agreement was finally reached.", "pv": "dragged on", "opts": ["A: continued too long", "B: became more serious", "C: was extended", "D: was delayed"], "a": "A", "h": "DRAG ON = continue for longer than expected or desired. Implies tedium or frustration at the length."},
+  {"id": "pv073", "sent": "The new policy has driven up the cost of housing in the city centre considerably.", "pv": "driven up", "opts": ["A: caused", "B: increased significantly", "C: raised artificially", "D: created"], "a": "B", "h": "DRIVE UP = cause prices, costs, or numbers to increase significantly. Often implies an unwanted increase."},
+  {"id": "pv074", "sent": "Several key witnesses failed to show up for the hearing, causing significant delays.", "pv": "show up", "opts": ["A: appear as expected", "B: be visible", "C: arrive", "D: perform well"], "a": "A", "h": "SHOW UP = arrive or appear at a place where you are expected. Often used when attendance is in question."},
+  {"id": "pv075", "sent": "The scandal has cast doubt on whether the minister will be able to ride out the political storm.", "pv": "ride out", "opts": ["A: survive", "B: endure and survive a difficult period", "C: escape", "D: manage"], "a": "B", "h": "RIDE OUT = endure and survive a difficult period or situation, especially in politics or business."},
+
+
+];
+
+const COL = [
+  {"id": "col001", "prompt": "Which word does NOT collocate with DECISION?", "key": "DECISION", "opts": ["A: make", "B: reach", "C: take", "D: do"], "a": "D", "h": "You make, reach, or take a decision — but you don't 'do' a decision. 'Do' doesn't collocate with abstract nouns like this."},
+  {"id": "col002", "prompt": "Which word does NOT collocate with ATTENTION?", "key": "ATTENTION", "opts": ["A: draw", "B: pay", "C: attract", "D: do"], "a": "D", "h": "You draw, pay, or attract attention — but 'do attention' is not a collocation. 'Do' rarely collocates with abstract nouns."},
+  {"id": "col003", "prompt": "Which word does NOT collocate with PROGRESS?", "key": "PROGRESS", "opts": ["A: make", "B: achieve", "C: do", "D: monitor"], "a": "C", "h": "You make, achieve, or monitor progress — but 'do progress' is not standard. 'Make progress' is the dominant collocation."},
+  {"id": "col004", "prompt": "Which word does NOT collocate with DAMAGE?", "key": "DAMAGE", "opts": ["A: cause", "B: suffer", "C: sustain", "D: make"], "a": "D", "h": "You cause, suffer, or sustain damage — but 'make damage' is not English. Compare: 'make a mistake' works, but not with 'damage'."},
+  {"id": "col005", "prompt": "Which word does NOT collocate with MISTAKE?", "key": "MISTAKE", "opts": ["A: make", "B: admit", "C: do", "D: correct"], "a": "C", "h": "You make, admit, or correct a mistake — but 'do a mistake' is a common learner error. Only 'make a mistake' is correct."},
+  {"id": "col006", "prompt": "Which word does NOT collocate with RISK?", "key": "RISK", "opts": ["A: take", "B: run", "C: pose", "D: do"], "a": "D", "h": "You take, run, or pose a risk — but 'do a risk' is not a collocation. All three others are valid: 'take a risk', 'run a risk', 'pose a risk'."},
+  {"id": "col007", "prompt": "Which word does NOT collocate with EFFORT?", "key": "EFFORT", "opts": ["A: make", "B: put in", "C: require", "D: do"], "a": "D", "h": "You make an effort, put in effort, or something requires effort — but 'do effort' is not standard English."},
+  {"id": "col008", "prompt": "Which word does NOT collocate with RESPONSIBILITY?", "key": "RESPONSIBILITY", "opts": ["A: take", "B: accept", "C: bear", "D: make"], "a": "D", "h": "You take, accept, or bear responsibility — but 'make responsibility' is not a collocation. Note: you 'make a commitment' but not responsibility."},
+  {"id": "col009", "prompt": "Which word does NOT collocate with SPEECH?", "key": "SPEECH", "opts": ["A: give", "B: deliver", "C: make", "D: do"], "a": "D", "h": "You give, deliver, or make a speech — but 'do a speech' sounds unnatural. All three others are standard collocations."},
+  {"id": "col010", "prompt": "Which word does NOT collocate with RESEARCH?", "key": "RESEARCH", "opts": ["A: conduct", "B: carry out", "C: do", "D: make"], "a": "D", "h": "You conduct, carry out, or do research — but 'make research' is not standard. 'Do research' is accepted informally; 'make research' is not."},
+  {"id": "col011", "prompt": "Which adjective does NOT collocate with IMPACT?", "key": "IMPACT", "opts": ["A: significant", "B: profound", "C: major", "D: strong"], "a": "D", "h": "You can have a significant, profound, or major impact — but 'a strong impact' is unusual. 'Strong' collocates with 'influence', 'evidence', and 'argument', not 'impact'."},
+  {"id": "col012", "prompt": "Which adjective does NOT collocate with EVIDENCE?", "key": "EVIDENCE", "opts": ["A: strong", "B: compelling", "C: hard", "D: heavy"], "a": "D", "h": "Strong, compelling, or hard evidence are all natural — but 'heavy evidence' is not. 'Heavy' collocates with 'traffic', 'rain', 'burden' — not 'evidence'."},
+  {"id": "col013", "prompt": "Which adjective does NOT collocate with INCREASE?", "key": "INCREASE", "opts": ["A: sharp", "B: dramatic", "C: steady", "D: strong"], "a": "D", "h": "A sharp, dramatic, or steady increase are all standard — but 'a strong increase' is not natural. Use 'strong' with 'performance', 'growth', or 'demand', not 'increase'."},
+  {"id": "col014", "prompt": "Which adjective does NOT collocate with CRITICISM?", "key": "CRITICISM", "opts": ["A: fierce", "B: harsh", "C: heavy", "D: big"], "a": "D", "h": "Fierce, harsh, or heavy criticism are all natural C1 collocations — but 'big criticism' sounds wrong. Size adjectives like 'big' and 'large' rarely collocate with abstract nouns."},
+  {"id": "col015", "prompt": "Which adjective does NOT collocate with KNOWLEDGE?", "key": "KNOWLEDGE", "opts": ["A: thorough", "B: extensive", "C: deep", "D: strong"], "a": "D", "h": "Thorough, extensive, or deep knowledge are all natural — but 'strong knowledge' is not standard. Use 'strong' with 'performance' or 'skills', not 'knowledge'."},
+  {"id": "col016", "prompt": "Which adjective does NOT collocate with DIFFERENCE?", "key": "DIFFERENCE", "opts": ["A: significant", "B: marked", "C: striking", "D: intense"], "a": "D", "h": "A significant, marked, or striking difference are all correct — but 'an intense difference' is not a collocation. 'Intense' collocates with 'pressure', 'emotion', 'debate'."},
+  {"id": "col017", "prompt": "Which adjective does NOT collocate with MAJORITY?", "key": "MAJORITY", "opts": ["A: vast", "B: overwhelming", "C: clear", "D: strong"], "a": "D", "h": "A vast, overwhelming, or clear majority are standard collocations — but 'a strong majority' is less natural. 'Strong' is used with 'majority' in politics but it's not the dominant form."},
+  {"id": "col018", "prompt": "Which adjective does NOT collocate with CONCERN?", "key": "CONCERN", "opts": ["A: growing", "B: serious", "C: deep", "D: heavy"], "a": "D", "h": "Growing, serious, or deep concern are all natural — but 'heavy concern' is not standard. 'Heavy' works with physical or weather-related nouns, not abstract ones like 'concern'."},
+  {"id": "col019", "prompt": "Which adjective does NOT collocate with DEBATE?", "key": "DEBATE", "opts": ["A: fierce", "B: heated", "C: lively", "D: strong"], "a": "D", "h": "A fierce, heated, or lively debate are all correct — but 'a strong debate' is unusual. Use 'strong' for arguments, evidence, or performance — not debates."},
+  {"id": "col020", "prompt": "Which adjective does NOT collocate with FAILURE?", "key": "FAILURE", "opts": ["A: complete", "B: total", "C: utter", "D: full"], "a": "D", "h": "Complete, total, or utter failure are all intensified forms — but 'full failure' is not standard. 'Full' collocates with 'potential', 'capacity', 'support' — not 'failure'."},
+  {"id": "col021", "prompt": "Which word does NOT collocate with POLICY?", "key": "POLICY", "opts": ["A: implement", "B: adopt", "C: pursue", "D: make"], "a": "D", "h": "You implement, adopt, or pursue a policy — but 'make a policy' is unusual in formal writing. You 'make a decision' or 'make a law', but policies are 'adopted' or 'implemented'."},
+  {"id": "col022", "prompt": "Which word does NOT collocate with AGREEMENT?", "key": "AGREEMENT", "opts": ["A: reach", "B: sign", "C: broker", "D: make"], "a": "D", "h": "You reach, sign, or broker an agreement — but 'make an agreement' is less formal. In written C1 contexts, 'reach' or 'sign' are preferred."},
+  {"id": "col023", "prompt": "Which word does NOT collocate with CONCLUSION?", "key": "CONCLUSION", "opts": ["A: draw", "B: reach", "C: come to", "D: make"], "a": "D", "h": "You draw, reach, or come to a conclusion — but 'make a conclusion' is not standard. This is a very common learner error."},
+  {"id": "col024", "prompt": "Which word does NOT collocate with ARGUMENT?", "key": "ARGUMENT", "opts": ["A: put forward", "B: make", "C: advance", "D: do"], "a": "D", "h": "You put forward, make, or advance an argument — but 'do an argument' is not correct. 'Do' rarely collocates with abstract intellectual nouns."},
+  {"id": "col025", "prompt": "Which word does NOT collocate with APPOINTMENT?", "key": "APPOINTMENT", "opts": ["A: make", "B: keep", "C: miss", "D: reach"], "a": "D", "h": "You make, keep, or miss an appointment — but 'reach an appointment' is not standard. 'Reach' collocates with agreements, conclusions, and decisions."},
+  {"id": "col026", "prompt": "Which preposition does NOT collocate with RESULT?", "key": "RESULT", "opts": ["A: as a result of", "B: result in", "C: result from", "D: result by"], "a": "D", "h": "'As a result of', 'result in', and 'result from' are all correct — but 'result by' is not a standard prepositional collocation."},
+  {"id": "col027", "prompt": "Which preposition does NOT follow INTERESTED?", "key": "INTERESTED", "opts": ["A: interested in", "B: interested by", "C: interested at", "D: interested to"], "a": "C", "h": "'Interested in' (general), 'interested by' (formal: intrigued), and 'interested to' (+ infinitive: 'I'd be interested to know') are all used — but 'interested at' is not standard."},
+  {"id": "col028", "prompt": "Which preposition does NOT follow RESPONSIBLE?", "key": "RESPONSIBLE", "opts": ["A: responsible for", "B: responsible to", "C: responsible in", "D: responsible towards"], "a": "C", "h": "'Responsible for' (accountable for), 'responsible to' (answerable to a body), and 'responsible towards' (having a duty towards) are all used — but 'responsible in' is not standard."},
+  {"id": "col029", "prompt": "Which phrase does NOT collocate with ACCOUNT?", "key": "ACCOUNT", "opts": ["A: take into account", "B: on account of", "C: account for", "D: in account of"], "a": "D", "h": "'Take into account', 'on account of', and 'account for' are all standard — but 'in account of' is not a phrase in English."},
+  {"id": "col030", "prompt": "Which preposition does NOT follow DIFFER?", "key": "DIFFER", "opts": ["A: differ from", "B: differ in", "C: differ between", "D: differ on"], "a": "C", "h": "'Differ from' (be unlike), 'differ in' (differ in certain respects), and 'differ on' (disagree on an issue) are all correct — but 'differ between' is not standard."},
+  {"id": "col031", "prompt": "Which adverb does NOT collocate with AFFECTED?", "key": "AFFECTED", "opts": ["A: badly", "B: severely", "C: deeply", "D: largely"], "a": "D", "h": "Badly, severely, or deeply affected are all natural — but 'largely affected' is not standard. 'Largely' collocates with 'determined by', 'due to', or 'responsible for'."},
+  {"id": "col032", "prompt": "Which adverb does NOT collocate with RECOMMEND?", "key": "RECOMMEND", "opts": ["A: strongly", "B: highly", "C: deeply", "D: warmly"], "a": "C", "h": "Strongly, highly, or warmly recommended are all correct — but 'deeply recommended' is not standard. 'Deeply' collocates with 'concerned', 'divided', 'troubled'."},
+  {"id": "col033", "prompt": "Which adverb does NOT collocate with COMMITTED?", "key": "COMMITTED", "opts": ["A: fully", "B: deeply", "C: strongly", "D: highly"], "a": "D", "h": "Fully, deeply, or strongly committed are all natural — but 'highly committed' is unusual. 'Highly' collocates with 'recommended', 'regarded', 'effective'."},
+  {"id": "col034", "prompt": "Which adverb does NOT collocate with INFLUENCED?", "key": "INFLUENCED", "opts": ["A: heavily", "B: greatly", "C: deeply", "D: largely"], "a": "D", "h": "Heavily, greatly, or deeply influenced are natural collocations — but 'largely influenced' is not standard. 'Largely' collocates with 'determined by', 'ignored', 'forgotten'."},
+  {"id": "col035", "prompt": "Which adverb does NOT collocate with MISTAKEN?", "key": "MISTAKEN", "opts": ["A: gravely", "B: seriously", "C: deeply", "D: badly"], "a": "C", "h": "Gravely, seriously, or badly mistaken are all correct — but 'deeply mistaken' is unusual. 'Deeply' works with emotional states like 'concerned', 'troubled', 'committed'."},
+  {"id": "col036", "prompt": "Which word does NOT complete the phrase: '___ into account'?", "key": "into account", "opts": ["A: take", "B: bring", "C: call", "D: bear"], "a": "C", "h": "'Take into account', 'bring into account', and 'bear in mind' (similar meaning) are all used — but 'call into account' is not standard. ('Call to account' means to demand an explanation.)"},
+  {"id": "col037", "prompt": "Which word does NOT collocate with SHADOW?", "key": "SHADOW", "opts": ["A: cast a shadow", "B: throw a shadow", "C: overshadow", "D: do a shadow"], "a": "D", "h": "'Cast a shadow', 'throw a shadow', and 'overshadow' are all natural — but 'do a shadow' is not standard English."},
+  {"id": "col038", "prompt": "Which word does NOT collocate with GROUND?", "key": "GROUND", "opts": ["A: break new ground", "B: cover ground", "C: gain ground", "D: make ground"], "a": "D", "h": "'Break new ground', 'cover ground', and 'gain ground' are all fixed collocations — but 'make ground' is not standard. You 'make progress', not 'make ground'."},
+  {"id": "col039", "prompt": "Which verb does NOT collocate with PRESSURE?", "key": "PRESSURE", "opts": ["A: face", "B: withstand", "C: relieve", "D: make"], "a": "D", "h": "You face, withstand, or relieve pressure — but 'make pressure' is not a collocation. You 'put pressure on', 'apply pressure', or 'come under pressure'."},
+  {"id": "col040", "prompt": "Which verb does NOT collocate with DOUBT?", "key": "DOUBT", "opts": ["A: cast", "B: raise", "C: express", "D: make"], "a": "D", "h": "'Cast doubt on', 'raise doubts', and 'express doubt' are all correct — but 'make doubt' is not standard. Compare: you 'raise' or 'cast' doubt, but never 'make' it."},
+  {"id": "col041", "prompt": "Which verb does NOT collocate with COMMENT?", "key": "COMMENT", "opts": ["A: make", "B: pass", "C: offer", "D: do"], "a": "D", "h": "'Make a comment', 'pass comment', and 'offer a comment' are all correct — but 'do a comment' is not standard English."},
+  {"id": "col042", "prompt": "Which verb does NOT collocate with DAMAGE?", "key": "DAMAGE", "opts": ["A: repair", "B: undo", "C: reverse", "D: make"], "a": "D", "h": "You repair, undo, or reverse damage — but 'make damage' is not a collocation. You 'cause damage', not 'make' it."},
+  {"id": "col043", "prompt": "Which verb does NOT collocate with CHANGE?", "key": "CHANGE", "opts": ["A: bring about", "B: implement", "C: undergo", "D: do"], "a": "D", "h": "You bring about, implement, or undergo change — but 'do a change' is not standard. You 'make a change' or 'implement a change'."},
+  {"id": "col044", "prompt": "Which verb does NOT collocate with IMPRESSION?", "key": "IMPRESSION", "opts": ["A: make", "B: create", "C: leave", "D: do"], "a": "D", "h": "'Make an impression', 'create an impression', and 'leave an impression' are all correct — but 'do an impression' means to mimic someone, not to have an effect."},
+  {"id": "col045", "prompt": "Which verb does NOT collocate with EXCEPTION?", "key": "EXCEPTION", "opts": ["A: make", "B: take", "C: be no exception", "D: do"], "a": "D", "h": "'Make an exception', 'take exception to', and 'be no exception' are all standard — but 'do an exception' is not English."},
+  {"id": "col046", "prompt": "Which word does NOT collocate with GAP?", "key": "GAP", "opts": ["A: bridge", "B: widen", "C: close", "D: make"], "a": "D", "h": "You bridge, widen, or close a gap — but 'make a gap' is not a natural collocation. Gaps are created, widened, or closed — not made."},
+  {"id": "col047", "prompt": "Which word does NOT collocate with TREND?", "key": "TREND", "opts": ["A: reverse", "B: emerge", "C: follow", "D: make"], "a": "D", "h": "You reverse, follow a trend, and trends emerge — but 'make a trend' is not standard. Trends are 'set' (as in 'set a trend') but not 'made'."},
+  {"id": "col048", "prompt": "Which word does NOT collocate with SOLUTION?", "key": "SOLUTION", "opts": ["A: find", "B: propose", "C: implement", "D: do"], "a": "D", "h": "You find, propose, or implement a solution — but 'do a solution' is not standard. Solutions are 'found', 'reached', or 'implemented'."},
+  {"id": "col049", "prompt": "Which word does NOT collocate with ADVANTAGE?", "key": "ADVANTAGE", "opts": ["A: take", "B: gain", "C: offer", "D: do"], "a": "D", "h": "'Take advantage of', 'gain an advantage', and 'offer an advantage' are all correct — but 'do an advantage' is not standard."},
+  {"id": "col050", "prompt": "Which word does NOT collocate with POINT?", "key": "POINT", "opts": ["A: make", "B: raise", "C: prove", "D: do"], "a": "D", "h": "'Make a point', 'raise a point', and 'prove a point' are all correct — but 'do a point' is not standard English."},
+];
+
+const VOC = [
+  {"id": "voc001", "topic": "Environment", "def": "The variety of plant and animal life in a particular habitat or on Earth as a whole.", "opts": ["A: ecosystem", "B: biodiversity", "C: habitat", "D: conservation"], "a": "B", "h": "This compound noun combines 'biological' and 'diversity'. It refers to the range of living things."},
+  {"id": "voc002", "topic": "Environment", "def": "The process by which plants absorb carbon dioxide from the atmosphere, helping reduce greenhouse gases.", "opts": ["A: carbon offsetting", "B: reforestation", "C: carbon sequestration", "D: afforestation"], "a": "C", "h": "This technical term combines 'carbon' with a Latin root meaning 'to store or lock away'."},
+  {"id": "voc003", "topic": "Environment", "def": "The long-term warming of the planet's average temperature as a result of increased greenhouse gas emissions.", "opts": ["A: global warming", "B: climate change", "C: the greenhouse effect", "D: atmospheric heating"], "a": "A", "h": "This is the most direct and commonly used scientific term for rising average global temperatures."},
+  {"id": "voc004", "topic": "Environment", "def": "Land that has been damaged by industrial or other activity and left unused, often contaminated.", "opts": ["A: wasteland", "B: brownfield", "C: greenbelt", "D: floodplain"], "a": "B", "h": "This planning term specifically refers to previously developed or industrially used land."},
+  {"id": "voc005", "topic": "Environment", "def": "The gradual reduction in the thickness and extent of the ozone layer in the upper atmosphere.", "opts": ["A: ozone degradation", "B: ozone depletion", "C: atmospheric erosion", "D: ozone reduction"], "a": "B", "h": "The standard scientific and journalistic term uses 'depletion', meaning a reduction in supply."},
+  {"id": "voc006", "topic": "Environment", "def": "The process of restoring a natural environment that has been damaged or destroyed.", "opts": ["A: conservation", "B: preservation", "C: rehabilitation", "D: rewilding"], "a": "C", "h": "This term implies active restoration to a former healthy state — broader than preservation."},
+  {"id": "voc007", "topic": "Environment", "def": "The total amount of greenhouse gases produced by an individual, organisation, or activity.", "opts": ["A: carbon output", "B: emissions total", "C: carbon footprint", "D: pollution index"], "a": "C", "h": "This widely used compound noun metaphorically describes the 'mark' left on the environment."},
+  {"id": "voc008", "topic": "Society & Inequality", "def": "The unequal distribution of wealth, opportunities, and privileges within a society.", "opts": ["A: poverty", "B: disparity", "C: inequality", "D: exclusion"], "a": "C", "h": "This is the broadest term for uneven distribution of resources or opportunities across a population."},
+  {"id": "voc009", "topic": "Society & Inequality", "def": "A policy or programme designed to benefit members of a disadvantaged group who have previously suffered discrimination.", "opts": ["A: positive discrimination", "B: affirmative action", "C: equal opportunities", "D: social mobility"], "a": "B", "h": "This term, most common in US English, refers to proactive policies favouring underrepresented groups."},
+  {"id": "voc010", "topic": "Society & Inequality", "def": "The ability to move between different social or economic levels within a society.", "opts": ["A: social equality", "B: class mobility", "C: economic progression", "D: social mobility"], "a": "D", "h": "This compound noun specifically refers to movement between social classes or economic positions."},
+  {"id": "voc011", "topic": "Society & Inequality", "def": "Prejudice or discrimination based on a person's age, especially against older people.", "opts": ["A: ageism", "B: prejudice", "C: discrimination", "D: bias"], "a": "A", "h": "This -ism noun, formed like 'racism' and 'sexism', specifically targets age-based prejudice."},
+  {"id": "voc012", "topic": "Society & Inequality", "def": "The exclusion of certain groups from full participation in social, economic, and political life.", "opts": ["A: discrimination", "B: marginalisation", "C: segregation", "D: alienation"], "a": "B", "h": "This noun describes the process of pushing groups to the 'margins' of society."},
+  {"id": "voc013", "topic": "Society & Inequality", "def": "A situation in which wealthy people live in secure, private communities separate from the rest of society.", "opts": ["A: suburbanisation", "B: gentrification", "C: gated communities", "D: urban sprawl"], "a": "C", "h": "This specific term describes enclosed residential areas with restricted access, common among the wealthy."},
+  {"id": "voc014", "topic": "Society & Inequality", "def": "The process by which a poor urban area becomes wealthier through an influx of wealthier residents, often displacing the original community.", "opts": ["A: urbanisation", "B: regeneration", "C: redevelopment", "D: gentrification"], "a": "D", "h": "This term implies transformation driven by wealthier incomers, often with negative connotations for existing residents."},
+  {"id": "voc015", "topic": "Technology", "def": "The ability to understand, evaluate, and create content using digital technologies.", "opts": ["A: computer skills", "B: digital literacy", "C: technical proficiency", "D: online competence"], "a": "B", "h": "This compound noun, modelled on 'literacy', describes the full range of digital understanding and skills."},
+  {"id": "voc016", "topic": "Technology", "def": "A simulated experience that can be similar to or completely different from the real world, created using technology.", "opts": ["A: augmented reality", "B: artificial intelligence", "C: virtual reality", "D: digital simulation"], "a": "C", "h": "This technology creates a fully immersive digital environment, distinct from 'augmented' reality."},
+  {"id": "voc017", "topic": "Technology", "def": "The use of algorithms and large datasets to enable machines to learn and improve without explicit programming.", "opts": ["A: automation", "B: robotics", "C: machine learning", "D: algorithmic processing"], "a": "C", "h": "This is a specific branch of AI in which systems improve their performance through experience."},
+  {"id": "voc018", "topic": "Technology", "def": "The potential negative consequences or unintended outcomes of introducing new technologies.", "opts": ["A: technical risk", "B: digital disruption", "C: algorithmic bias", "D: technological fallout"], "a": "B", "h": "This term describes the wide-scale changes and upheaval caused by new technology in established industries."},
+  {"id": "voc019", "topic": "Technology", "def": "A system that analyses a person's financial, social, or behavioural data to assign them a score affecting their access to services.", "opts": ["A: data profiling", "B: credit rating", "C: social scoring", "D: algorithmic ranking"], "a": "C", "h": "This controversial practice, associated with authoritarian states, uses data to evaluate citizens' behaviour."},
+  {"id": "voc020", "topic": "Technology", "def": "The gap between those who have access to digital technologies and those who do not.", "opts": ["A: the technology gap", "B: the digital divide", "C: the connectivity gap", "D: the access disparity"], "a": "B", "h": "This established compound noun describes inequality of access to digital tools and the internet."},
+  {"id": "voc021", "topic": "Health", "def": "A state of complete physical, mental, and social wellbeing, not merely the absence of disease.", "opts": ["A: fitness", "B: wellness", "C: health", "D: vitality"], "a": "C", "h": "This is the WHO's definition of this term — broader than simply 'not being ill'."},
+  {"id": "voc022", "topic": "Health", "def": "The psychological burden of caring for others, leading to exhaustion and reduced empathy.", "opts": ["A: job burnout", "B: compassion fatigue", "C: carer stress", "D: emotional exhaustion"], "a": "B", "h": "This specific compound noun describes the particular type of exhaustion experienced by those in caring roles."},
+  {"id": "voc023", "topic": "Health", "def": "The science of studying how genes interact with lifestyle and environment to influence health.", "opts": ["A: genetic medicine", "B: epigenetics", "C: genomics", "D: bioinformatics"], "a": "B", "h": "This field examines changes in gene expression caused by environment and behaviour, not changes to DNA itself."},
+  {"id": "voc024", "topic": "Health", "def": "The proportion of a population that must be immune to a disease (through infection or vaccination) to prevent its spread.", "opts": ["A: population immunity", "B: collective immunity", "C: herd immunity", "D: mass immunity"], "a": "C", "h": "This widely used term describes the threshold of immunity needed to protect a whole community."},
+  {"id": "voc025", "topic": "Health", "def": "The long-term cost and impact of a health condition on an individual or society, not just the immediate treatment.", "opts": ["A: health burden", "B: disease cost", "C: medical impact", "D: illness toll"], "a": "A", "h": "This economic and public health term encompasses direct and indirect costs of a condition."},
+  {"id": "voc026", "topic": "Health", "def": "The unequal distribution of health outcomes and access to healthcare across different groups in society.", "opts": ["A: healthcare gap", "B: health inequality", "C: medical disparity", "D: health inequity"], "a": "D", "h": "This term specifically implies that the differences are unjust and avoidable, making it stronger than 'inequality'."},
+  {"id": "voc027", "topic": "Health", "def": "The process by which a person gradually increases their tolerance to a drug, requiring larger doses for the same effect.", "opts": ["A: dependence", "B: addiction", "C: tolerance", "D: habituation"], "a": "C", "h": "This clinical term specifically refers to the physiological adaptation requiring increasing doses."},
+  {"id": "voc028", "topic": "Education", "def": "An approach to learning that focuses on developing students' ability to solve real-world problems.", "opts": ["A: experiential learning", "B: problem-based learning", "C: project learning", "D: constructivism"], "a": "B", "h": "This pedagogical approach uses real or simulated problems as the primary vehicle for learning."},
+  {"id": "voc029", "topic": "Education", "def": "The idea that intelligence and abilities can be developed through dedication and hard work.", "opts": ["A: positive mindset", "B: learning attitude", "C: growth mindset", "D: progressive thinking"], "a": "C", "h": "This compound noun, coined by Carol Dweck, contrasts with a 'fixed mindset'."},
+  {"id": "voc030", "topic": "Education", "def": "The ability to continue learning and adapting skills throughout one's entire working life.", "opts": ["A: continuous development", "B: lifelong learning", "C: professional growth", "D: adult education"], "a": "B", "h": "This established compound noun describes the ongoing, voluntary pursuit of knowledge beyond formal education."},
+  {"id": "voc031", "topic": "Education", "def": "A system in which students progress based on demonstrated mastery of a subject rather than time spent.", "opts": ["A: merit-based education", "B: competency-based learning", "C: standards-based assessment", "D: mastery learning"], "a": "B", "h": "This approach evaluates students on what they can do, not when they learned it."},
+  {"id": "voc032", "topic": "Education", "def": "The difference in academic achievement between students from different socioeconomic or demographic groups.", "opts": ["A: academic inequality", "B: attainment gap", "C: achievement divide", "D: educational disparity"], "a": "B", "h": "This compound noun is the standard UK educational term for unequal academic outcomes between groups."},
+  {"id": "voc033", "topic": "Education", "def": "A teaching approach in which students first encounter new content at home (via video etc.) and practise it in class.", "opts": ["A: blended learning", "B: self-directed study", "C: flipped classroom", "D: remote learning"], "a": "C", "h": "This pedagogical model 'flips' the traditional homework-and-lesson structure."},
+  {"id": "voc034", "topic": "Work & Economy", "def": "The increasing interconnectedness of economies, cultures, and populations across the world.", "opts": ["A: internationalisation", "B: globalisation", "C: liberalisation", "D: integration"], "a": "B", "h": "This widely used noun describes the process by which markets, cultures, and politics become globally integrated."},
+  {"id": "voc035", "topic": "Work & Economy", "def": "A reduction in the number of employees within an organisation, typically to cut costs.", "opts": ["A: redundancy", "B: downsizing", "C: restructuring", "D: rationalisation"], "a": "B", "h": "This corporate term specifically refers to planned workforce reduction to reduce costs."},
+  {"id": "voc036", "topic": "Work & Economy", "def": "The replacement of human workers by machines or software in the performance of tasks.", "opts": ["A: mechanisation", "B: industrialisation", "C: automation", "D: digitalisation"], "a": "C", "h": "This term specifically describes using technology to perform tasks previously done by humans."},
+  {"id": "voc037", "topic": "Work & Economy", "def": "A period of temporary or permanent unemployment between two jobs.", "opts": ["A: career break", "B: employment gap", "C: job hiatus", "D: career pause"], "a": "B", "h": "This neutral compound noun describes a gap in a person's employment history on a CV."},
+  {"id": "voc038", "topic": "Work & Economy", "def": "The right to receive a portion of the profits of a company in addition to a regular wage.", "opts": ["A: bonus", "B: dividend", "C: profit-sharing", "D: commission"], "a": "C", "h": "This compound noun specifically refers to a formal arrangement in which employees share company profits."},
+  {"id": "voc039", "topic": "Work & Economy", "def": "A recession so severe that it leads to a prolonged collapse of economic activity.", "opts": ["A: slump", "B: crash", "C: depression", "D: downturn"], "a": "C", "h": "This economic term specifically describes a severe, prolonged downturn — more serious than a recession."},
+  {"id": "voc040", "topic": "Work & Economy", "def": "The proportion of the working-age population that is employed or actively seeking work.", "opts": ["A: labour supply", "B: workforce participation", "C: employment rate", "D: activity rate"], "a": "B", "h": "This economic measure encompasses both employed people and those actively job-seeking."},
+  {"id": "voc041", "topic": "Politics & Government", "def": "A system of government in which elected representatives hold power on behalf of citizens.", "opts": ["A: democracy", "B: republic", "C: representative democracy", "D: parliamentary system"], "a": "C", "h": "This compound noun specifies that citizens exercise power indirectly through elected representatives."},
+  {"id": "voc042", "topic": "Politics & Government", "def": "The abuse of power by those in authority for personal gain, often involving bribery.", "opts": ["A: nepotism", "B: fraud", "C: corruption", "D: embezzlement"], "a": "C", "h": "This broad term encompasses dishonest behaviour by those in positions of power."},
+  {"id": "voc043", "topic": "Politics & Government", "def": "The practice of drawing electoral district boundaries to give one party an advantage over another.", "opts": ["A: lobbying", "B: gerrymandering", "C: electoral fraud", "D: constituency manipulation"], "a": "B", "h": "This term, originating from a 19th-century US governor, describes manipulating boundaries for political advantage."},
+  {"id": "voc044", "topic": "Politics & Government", "def": "A policy that prioritises the interests of one's own country above those of other nations.", "opts": ["A: protectionism", "B: nationalism", "C: isolationism", "D: sovereignism"], "a": "B", "h": "This political philosophy places the nation's interests and identity above international cooperation."},
+  {"id": "voc045", "topic": "Politics & Government", "def": "The principle that a government's authority is derived from and limited by the law.", "opts": ["A: judicial supremacy", "B: constitutional law", "C: the rule of law", "D: legal sovereignty"], "a": "C", "h": "This foundational legal principle holds that no individual or government is above the law."},
+  {"id": "voc046", "topic": "Culture & Arts", "def": "The process by which a minority culture gradually absorbs the values and practices of a dominant culture.", "opts": ["A: integration", "B: assimilation", "C: acculturation", "D: globalisation"], "a": "B", "h": "This term implies a loss of the original culture as it merges into the dominant one — stronger than acculturation."},
+  {"id": "voc047", "topic": "Culture & Arts", "def": "The practice of members of one culture adopting elements of another, sometimes seen as exploitative.", "opts": ["A: cultural exchange", "B: multiculturalism", "C: cultural appropriation", "D: hybridisation"], "a": "C", "h": "This compound noun is used when dominant cultures adopt elements from marginalised ones, often controversially."},
+  {"id": "voc048", "topic": "Culture & Arts", "def": "Art, music, or writing that does not follow traditional or representational forms.", "opts": ["A: contemporary", "B: modernist", "C: avant-garde", "D: abstract"], "a": "D", "h": "This adjective specifically describes art that does not depict recognisable objects or scenes."},
+  {"id": "voc049", "topic": "Culture & Arts", "def": "The global spread of one culture's products, values, and practices, often at the expense of local cultures.", "opts": ["A: cultural imperialism", "B: soft power", "C: cultural globalisation", "D: westernisation"], "a": "A", "h": "This critical term implies that the spread of one dominant culture undermines or replaces others."},
+  {"id": "voc050", "topic": "Culture & Arts", "def": "An artistic or intellectual movement from the late 20th century that rejected grand narratives and embraced irony and plurality.", "opts": ["A: modernism", "B: surrealism", "C: postmodernism", "D: existentialism"], "a": "C", "h": "This movement, prevalent from the 1970s onwards, questioned objective truth and embraced fragmentation and self-reference."},
+];
+
+const PARTS = [
+  {id:1,label:'Part 1',name:'Multiple Choice',sub:'Choose the best option A–D',c:'--p1'},
+  {id:2,label:'Part 2',name:'Open Cloze',    sub:'Type the missing word',           c:'--p2'},
+  {id:3,label:'Part 3',name:'Word Formation', sub:'Form the correct word from the root',c:'--p3'},
+  {id:4,label:'Part 4',name:'Key Word',       sub:'2 marks per question',            c:'--p4'},
+  {id:5,label:'',name:'Phrasal Verbs',sub:'Match the phrasal verb to its meaning',c:'--p5'},
+  {id:6,label:'',name:'Collocations',sub:'Find the word that does NOT collocate',c:'--p6',extra:true},
+  {id:7,label:'',name:'Vocabulary in Context',sub:'Match the definition to the correct word',c:'--p7',extra:true},
+];
+const POOLS = {1:P1,2:P2,3:P3,4:P4,5:P5,6:COL,7:VOC};
+
+const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
+const norm    = s => s.toLowerCase().replace(/\s+/g,' ').trim().replace(/['\u2019]/g,"'");
+// Split answer string on / to get accepted variants (for P2/P3 with multiple answers)
+const getAccepted = (q) => {
+  if (q.accept) return q.accept.map(norm); // P4 has explicit accept array
+  if (q.a) return q.a.split('/').map(s => norm(s.trim())); // P2/P3 slash-separated
+  return [];
+};
+const lsGet = (k,d) => { try{ var v=JSON.parse(localStorage.getItem(k)); return v!==null&&v!==undefined?v:d; }catch(e){return d;} };
+const lsSet = (k,v) => { try{ localStorage.setItem(k,JSON.stringify(v)) }catch{} };
+// Get hint text - field is 'h' in P1/P2/P3, 'hint' in P4
+const getHint = q => q.h || q.hint || '';
+
+
+let G = { partId:null, qs:[], idx:0, score:0, done:false, val:'', hint:false, bests:lsGet('c1bests',{}), results:[], streak:0, maxStreak:0 };
+var BANK = lsGet('c1bank',{});
+
+function show(id){
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+
+function updateBankBtn(){
+  var wrongCount=Object.values(BANK).filter(function(e){return e.wrong;}).length;
+  var hintCount=Object.values(BANK).filter(function(e){return !e.wrong&&e.hint;}).length;
+  var total=wrongCount+hintCount;
+  var btn=document.getElementById('bank-btn');
+  var label=document.getElementById('bank-label');
+  if(!btn) return;
+  if(total>0){
+    btn.style.display='flex';
+    var parts=[];
+    if(wrongCount>0) parts.push(wrongCount+' incorrect');
+    if(hintCount>0) parts.push(hintCount+' hint-assisted');
+    label.textContent=parts.join(' · ')+' saved for review';
+  } else {
+    btn.style.display='none';
+  }
+}
+
+function startBankReview(filterFn){
+  // Look up actual question objects from all pools
+  var ALL={};
+  [P1,P2,P3,P4,P5,COL,VOC].forEach(function(pool){
+    pool.forEach(function(q){ ALL[q.id]=q; });
+  });
+  var ids=Object.keys(BANK).filter(filterFn||function(){return true;});
+  var qs=ids.map(function(id){return ALL[id];}).filter(Boolean);
+  if(!qs.length){ alert('No questions found.'); return; }
+  // Determine partId from first question (mixed sessions use first part)
+  var firstEntry=BANK[ids[0]];
+  G.partId=firstEntry?firstEntry.partId:1;
+  // For mixed parts, we need to handle rendering — set partId per question
+  G.qs=qs.map(function(q){
+    var entry=BANK[q.id];
+    return Object.assign({},q,{_partId:entry?entry.partId:G.partId});
+  });
+  G.idx=0; G.score=0; G.done=false; G.val=''; G.hint=false; G.hintUsed=false; G.results=[]; G.streak=0; G.maxStreak=0;
+  G.bankMode=true;
+  renderQ(); show('s-question');
+}
+
+function buildHome(){
+  updateBankBtn();
+  document.getElementById('tiles').innerHTML = PARTS.map(p=>{
+    const c=`var(${p.c})`, best=G.bests['p'+p.id];
+    const bHtml=best!=null?`<div class="bbadge" style="color:${c};background:rgba(128,128,128,.12)">${best}%</div>`:'';
+    var labelHtml = p.label ? '<div class="tag" style="color:'+c+'">'+p.label+'</div>' : '<div class="tag" style="color:'+c+'">Extra Practice</div>';
+    return '<button class="tile" onclick="openSetup('+p.id+')">'
+      +'<div style="flex:1">'+labelHtml
+      +'<div class="tname">'+p.name+'</div>'
+      +'<div class="tsub">'+p.sub+'</div>'
+      +'</div>'
+      +'<div class="tile-r">'+bHtml+'<div class="arrow" style="background:rgba(128,128,128,.12);color:'+c+'">&rsaquo;</div></div>'
+      +'</button>';
+  }).join('');
+}
+
+function openSetup(partId){
+  G.partId=partId;
+  const p=PARTS.find(x=>x.id===partId), c=`var(${p.c})`;
+  document.getElementById('stag').style.color=c;
+  document.getElementById('stag').textContent=p.label||'Extra Practice';
+  document.getElementById('stitle').textContent=p.name;
+  document.getElementById('p4note').style.display=partId===4?'block':'none';
+  const pool=POOLS[partId];
+  // Vocab: show topic filter buttons then count buttons
+  if(partId===7){
+    var topics=[...new Set(pool.map(function(q){return q.topic;}))];
+    var topicBtns=topics.map(function(t){
+      return '<button class="cnt-btn" style="color:'+c+';background:rgba(128,128,128,.08);border-color:rgba(128,128,128,.25)" data-topic="'+t+'" onclick="startTopicSession(this.dataset.topic)">'
+        +t+'</button>';
+    }).join('');
+    topicBtns+='<div style="margin-top:14px;font-size:10px;color:var(--dim)">— or mixed —</div>';
+    var ns=[10,20,pool.length].filter(function(n,i,a){return a.indexOf(n)===i&&n<=pool.length;});
+    topicBtns+=ns.map(function(n){
+      var lbl=n===pool.length?'All '+n+' questions':n+' mixed questions';
+      return '<button class="cnt-btn" style="color:'+c+';background:rgba(128,128,128,.08);border-color:rgba(128,128,128,.25)" onclick="startSession(7,'+n+')" >'+lbl+'</button>';
+    }).join('');
+    document.getElementById('cntbtns').innerHTML=topicBtns;
+  } else {
+    var ns=[5,10,20,pool.length].filter(function(n,i,a){return a.indexOf(n)===i&&n<=pool.length;});
+    document.getElementById('cntbtns').innerHTML=ns.map(function(n){
+      var lbl=n===pool.length?'All '+n+' questions':n+' questions';
+      return '<button class="cnt-btn" style="color:'+c+';background:rgba(128,128,128,.08);border-color:rgba(128,128,128,.25)" onclick="startSession('+partId+','+n+')">'+lbl+'</button>';
+    }).join('');
+  }
+  show('s-setup');
+}
+
+function startTopicSession(topic){
+  var filtered=VOC.filter(function(q){return q.topic===topic;});
+  G.partId=7; G.qs=shuffle(filtered);
+  G.idx=0; G.score=0; G.done=false; G.val=''; G.hint=false; G.hintUsed=false; G.results=[]; G.streak=0; G.maxStreak=0; G.bankMode=false;
+  renderQ(); show('s-question');
+}
+
+function startSession(partId,n){
+  G.partId=partId; G.qs=shuffle(POOLS[partId]).slice(0,n);
+  G.idx=0; G.score=0; G.done=false; G.val=''; G.hint=false; G.hintUsed=false; G.results=[]; G.streak=0; G.maxStreak=0; G.bankMode=false;
+  renderQ(); show('s-question');
+}
+
+function renderQ(){
+  const q=G.qs[G.idx], effectivePartId=G.bankMode&&q._partId?q._partId:G.partId, p=PARTS.find(x=>x.id===effectivePartId)||PARTS[0], c=`var(${p.c})`;
+  const total=G.qs.length, sMax=G.partId===4?G.idx*2:G.idx;
+  document.getElementById('pfill').style.cssText=`width:${(G.idx/total)*100}%;background:${c}`;
+  document.getElementById('qctr').style.color=c;
+  document.getElementById('qctr').textContent=`${G.idx+1}/${total}`;
+  document.getElementById('qscr').textContent=`${G.score}/${sMax}`;
+  let html='<div class="ptag" style="color:'+c+'">'+(p.label?p.label+' &middot; ':'')+p.name+'</div>';
+  var rPart=G.bankMode&&q._partId?q._partId:G.partId;
+  if(rPart===1) html+=htmlP1(q);
+  else if(rPart===2) html+=htmlP2(q);
+  else if(rPart===3) html+=htmlP3(q);
+  else if(rPart===4) html+=htmlP4(q);
+  else if(rPart===5) html+=htmlP5(q);
+  else if(rPart===6) html+=htmlCOL(q);
+  else html+=htmlVOC(q);
+  html+=htmlHint(q);
+  document.getElementById('qbody').innerHTML=html;
+  document.getElementById('qbody').scrollTop=0;
+  renderBot();
+  if(G.partId!==1) setTimeout(()=>{const i=document.getElementById('tin');if(i)i.focus();},80);
+}
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+function htmlP1(q){
+  const pts=q.sent.split('_______');
+  return `<div class="sent">${esc(pts[0])}<span class="gap" id="gap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>${esc(pts[1]||'')}</div>
+  <div class="opts">${q.opts.map(o=>`<button class="opt" data-l="${o[0]}" onclick="pickP1('${o[0]}')">${esc(o)}</button>`).join('')}</div>`;
+}
+
+function htmlP2(q){
+  const pts=q.sent.split('_______');
+  return `<div class="sent">${esc(pts[0])}<span class="gap" id="gap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>${esc(pts[1]||'')}</div>
+  <input class="tin" id="tin" type="text" autocomplete="off" spellcheck="false" placeholder="Type the missing word\u2026" oninput="G.val=this.value;updBot()" onkeydown="if(event.key==='Enter'&&G.val.trim())chk()">`;
+}
+
+function htmlP3(q){
+  const pts=q.sent.split('['+q.root+']');
+  return `<div class="rbadge"><span class="rlabel">ROOT</span><span class="rword">${esc(q.root)}</span></div>
+  <div class="sent">${esc(pts[0])}<span class="gap" id="gap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>${esc(pts[1]||'')}</div>
+  <input class="tin" id="tin" type="text" autocomplete="off" spellcheck="false" placeholder="Type the correct word form\u2026" oninput="G.val=this.value;updBot()" onkeydown="if(event.key==='Enter'&&G.val.trim())chk()">`;
+}
+
+function htmlP4(q){
+  return `<div class="origbox"><div class="origlbl">REWRITE THIS SENTENCE</div><div class="origtxt">${esc(q.orig)}</div></div>
+  <div class="kbadge"><span class="klabel">KEY WORD</span><span class="kword">${esc(q.key)}</span></div>
+  <div class="trow">${esc(q.before)} <span class="tgap" id="tgap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> ${esc(q.after)}</div>
+  <input class="tin" id="tin" type="text" autocomplete="off" spellcheck="false" placeholder="2\u20135 words including the key word" oninput="G.val=this.value;updTgap()" onkeydown="if(event.key==='Enter'&&G.val.trim())chk()">`;
+}
+
+function htmlP5(q){
+  // Highlight the phrasal verb within the sentence
+  var highlighted = esc(q.sent).replace(
+    esc(q.pv),
+    '<span style="color:var(--p5);font-weight:500;border-bottom:2px solid var(--p5);padding-bottom:1px">'+esc(q.pv)+'</span>'
+  );
+  return '<div class="sent">'+highlighted+'</div>'
+    +'<div class="opts" id="p5opts">'+q.opts.map(function(o){
+      return '<button class="opt" data-l="'+o[0]+'" onclick="pickP5(this.dataset.l)">'+esc(o)+'</button>';
+    }).join('')+'</div>';
+}
+
+function pickP5(letter){
+  if(G.done) return;
+  var q=G.qs[G.idx];
+  var correct=letter===q.a;
+  G.score+=correct?1:0;
+  G.done=true;
+  G.results.push({idx:G.idx,correct:correct,skipped:false,hint:G.hintUsed});
+  if(correct){G.streak++;G.maxStreak=Math.max(G.maxStreak,G.streak);}else{G.streak=0;}
+  document.querySelectorAll('.opt').forEach(function(btn){
+    btn.disabled=true;
+    if(btn.dataset.l===q.a) btn.classList.add('ok');
+    else if(btn.dataset.l===letter&&!correct) btn.classList.add('bad');
+  });
+  if(correct){
+    renderBot();
+    setTimeout(function(){ if(G.done) nxt(); },1000);
+  } else {
+    G.hint=true; G.hintUsed=true;
+    var hb=document.getElementById('hbox'),hbtn=document.getElementById('hbtn');
+    if(hb) hb.style.display='block';
+    if(hbtn) hbtn.textContent='Hide hint';
+    renderBot();
+  }
+}
+
+function htmlCOL(q){
+  // Collocations odd-one-out: show key word as badge + prompt question
+  var html='<div style="display:inline-flex;align-items:center;gap:7px;margin-bottom:16px;background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.25);border-radius:7px;padding:5px 12px">'
+    +'<span style="font-size:10px;color:var(--p6);letter-spacing:.1em;font-weight:500">KEY WORD</span>'
+    +'<span style="font-family:monospace;font-size:.95rem;color:#c4b5fd;font-weight:500">'+esc(q.key)+'</span>'
+    +'</div>';
+  html+='<div style="font-size:1.07rem;line-height:1.7;margin-bottom:22px;color:var(--tx)">'+esc(q.prompt)+'</div>';
+  html+='<div class="opts">'+q.opts.map(function(o){
+    return '<button class="opt" data-l="'+o[0]+'" onclick="pickMC(this.dataset.l)">'+esc(o)+'</button>';
+  }).join('')+'</div>';
+  return html;
+}
+
+function htmlVOC(q){
+  // Vocab: show topic badge + definition, choose the word
+  var c='var(--p7)';
+  var html='<div style="display:inline-flex;align-items:center;gap:6px;margin-bottom:16px;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.25);border-radius:7px;padding:4px 11px">'
+    +'<span style="font-size:10px;color:var(--p7);letter-spacing:.1em;font-weight:500">'+esc(q.topic).toUpperCase()+'</span>'
+    +'</div>';
+  html+='<div style="font-size:1.07rem;line-height:1.7;margin-bottom:24px;color:var(--tx)">'+esc(q.def)+'</div>';
+  html+='<div class="opts">'+q.opts.map(function(o){
+    return '<button class="opt" data-l="'+o[0]+'" onclick="pickMC(this.dataset.l)">'+esc(o)+'</button>';
+  }).join('')+'</div>';
+  return html;
+}
+
+function pickMC(letter){
+  // Generic MC handler for COL and VOC (and could be used by P1/P5 too)
+  if(G.done) return;
+  var q=G.qs[G.idx];
+  var correct=letter===q.a;
+  G.score+=correct?1:0;
+  G.done=true;
+  G.results.push({idx:G.idx,correct:correct,skipped:false,hint:G.hintUsed});
+  if(correct){G.streak++;G.maxStreak=Math.max(G.maxStreak,G.streak);}else{G.streak=0;}
+  document.querySelectorAll('.opt').forEach(function(btn){
+    btn.disabled=true;
+    if(btn.dataset.l===q.a) btn.classList.add('ok');
+    else if(btn.dataset.l===letter&&!correct) btn.classList.add('bad');
+  });
+  if(correct){
+    renderBot();
+    setTimeout(function(){ if(G.done) nxt(); },1000);
+  } else {
+    G.hint=true; G.hintUsed=true;
+    var hb=document.getElementById('hbox'),hbtn=document.getElementById('hbtn');
+    if(hb) hb.style.display='block';
+    if(hbtn) hbtn.textContent='Hide hint';
+    renderBot();
+  }
+}
+
+function htmlHint(q){
+  const hint=getHint(q);
+  if(!hint) return '';
+  return `<div class="harea"><button class="hbtn" id="hbtn" onclick="togHint()">${G.hint?'Hide hint':'Show hint'}</button>
+  <div class="hbox" id="hbox" style="${G.hint?'':'display:none'}"><div class="htag">HINT</div><div class="htxt">${esc(hint)}</div></div></div>`;
+}
+
+function togHint(){
+  G.hint=!G.hint;
+  if(G.hint) G.hintUsed=true;
+  const b=document.getElementById('hbox'),btn=document.getElementById('hbtn');
+  if(b) b.style.display=G.hint?'block':'none';
+  if(btn) btn.textContent=G.hint?'Hide hint':'Show hint';
+}
+
+function updTgap(){
+  const g=document.getElementById('tgap');
+  if(g) g.textContent=G.val||'\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0';
+  updBot();
+}
+
+function renderBot(){
+  const p=PARTS.find(x=>x.id===G.partId),c=`var(${p.c})`;
+  const isLast=G.idx===G.qs.length-1;
+  const el=document.getElementById('qbot');
+  if(G.done){
+    el.innerHTML=`<button class="nxtbtn" style="background:${c}" onclick="nxt()">${isLast?'See Results &rarr;':'Next &rarr;'}</button>`;
+  } else if([1,5,6,7].indexOf(G.bankMode&&G.qs[G.idx]&&G.qs[G.idx]._partId?G.qs[G.idx]._partId:G.partId)>=0){
+    el.innerHTML='';
+  } else {
+    const active=G.val.trim().length>0;
+    el.innerHTML=`<button class="chkbtn" id="chkbtn" onclick="chk()" style="background:${active?c:'var(--bd)'};color:${active?'#0d0f1a':'var(--dimmer)'};cursor:${active?'pointer':'default'}">Check</button>
+    <button class="skipbtn" onclick="doSkip()">Skip &rarr;</button>`;
+  }
+}
+
+function updBot(){
+  if(G.done) return;
+  const p=PARTS.find(x=>x.id===G.partId),c=`var(${p.c})`;
+  const btn=document.getElementById('chkbtn');
+  if(!btn) return;
+  const active=G.val.trim().length>0;
+  btn.style.background=active?c:'var(--bd)';
+  btn.style.color=active?'#0d0f1a':'var(--dimmer)';
+  btn.style.cursor=active?'pointer':'default';
+}
+
+function pickP1(letter){
+  if(G.done) return;
+  const q=G.qs[G.idx];
+  const correct=letter===q.a;
+  G.score+=correct?1:0;
+  G.done=true;
+  G.results.push({idx:G.idx,correct:correct,skipped:false,hint:G.hintUsed});
+  if(correct){G.streak++;G.maxStreak=Math.max(G.maxStreak,G.streak);}else{G.streak=0;}
+  document.querySelectorAll('.opt').forEach(btn=>{
+    btn.disabled=true;
+    if(btn.dataset.l===q.a) btn.classList.add('ok');
+    else if(btn.dataset.l===letter&&!correct) btn.classList.add('bad');
+  });
+  const ansText=q.opts.find(o=>o[0]===q.a);
+  const gap=document.getElementById('gap');
+  if(gap&&ansText){gap.textContent=ansText.slice(3);gap.style.color='var(--green)';gap.style.borderColor='var(--green)';}
+  if(correct){
+    renderBot();
+    setTimeout(()=>{ if(G.done) nxt(); },1000);
+  } else {
+    G.hint=true;
+    const hb=document.getElementById('hbox'),hbtn=document.getElementById('hbtn');
+    if(hb) hb.style.display='block';
+    if(hbtn) hbtn.textContent='Hide hint';
+    renderBot();
+  }
+}
+
+function chk(){
+  if(G.done||!G.val.trim()) return;
+  const q=G.qs[G.idx], gn=norm(G.val);
+  let gained=0, status='wrong';
+
+  if(G.partId===4){
+    const accepted=q.accept.map(norm);
+    const fullyOk=accepted.includes(gn);
+    if(fullyOk){gained=2;status='correct';}
+    else{
+      const h1=gn.includes(norm(q.chunk1)), h2=gn.includes(norm(q.chunk2));
+      gained=(h1?1:0)+(h2?1:0);
+      status=gained===2?'correct':gained===1?'partial':'wrong';
+    }
+  } else {
+    // P2/P3: split 'a' field on '/' for multiple accepted answers
+    const accepted=getAccepted(q);
+    const ok=accepted.includes(gn);
+    gained=ok?1:0; status=ok?'correct':'wrong';
+  }
+
+  G.score+=gained;
+  G.done=true;
+  G.results.push({idx:G.idx,correct:status==='correct',skipped:false,hint:G.hintUsed});
+  if(status==='correct'){G.streak++;G.maxStreak=Math.max(G.maxStreak,G.streak);}else{G.streak=0;}
+  const sc=status==='correct'?'var(--green)':status==='partial'?'var(--amber)':'var(--red)';
+  const inp=document.getElementById('tin');
+  if(inp){inp.readOnly=true;inp.style.borderColor=sc;inp.style.color=sc;}
+  const tg=document.getElementById('tgap');
+  if(tg){tg.style.borderColor=sc;tg.style.color=sc;}
+  const gap=document.getElementById('gap');
+  // Show canonical correct answer in gap
+  const canonAns = q.accept ? q.accept[0] : (q.a ? q.a.split('/')[0] : '');
+  if(gap){gap.textContent=canonAns;gap.style.color='var(--green)';gap.style.borderColor='var(--green)';}
+
+  let fb='';
+  if(G.partId===4){
+    if(status==='correct') fb=`<div class="fb ok"><div class="fbm ok">&#10003; +2 marks &mdash; ${esc(q.accept[0])}</div></div>`;
+    else if(status==='partial') fb=`<div class="fb mid"><div class="fbm mid">&#126; +1 mark &mdash; one point correct</div><div class="fbs">Full answer: ${esc(q.accept[0])}</div></div>`;
+    else fb=`<div class="fb bad"><div class="fbm bad">&#10007; 0 marks</div><div class="fbs">Correct: ${esc(q.accept[0])}</div></div>`;
+    fb+=`<div class="mbox"><div class="mlbl">MARKING POINTS</div><div class="mrow">&#9312; ${esc(q.p1)}<br>&#9313; ${esc(q.p2)}</div></div>`;
+  } else {
+    if(status==='correct'){
+      fb=`<div class="fb ok"><div class="fbm ok">&#10003; Correct</div></div>`;
+    } else {
+      const accepted=getAccepted(q);
+      const displayAns=accepted.join(' / ');
+      fb=`<div class="fb bad"><div class="fbm bad">&#10007; &nbsp;Correct: <span style="color:var(--green)">${esc(displayAns)}</span></div></div>`;
+    }
+  }
+
+  const ha=document.querySelector('.harea');
+  if(ha) ha.insertAdjacentHTML('beforebegin',fb);
+  G.hint=true; G.hintUsed=true;
+  const hb=document.getElementById('hbox'),hbtn=document.getElementById('hbtn');
+  if(hb) hb.style.display='block';
+  if(hbtn) hbtn.textContent='Hide hint';
+  renderBot();
+}
+
+function nxt(){
+  if(G.idx>=G.qs.length-1){endSession();return;}
+  G.idx++;G.done=false;G.val='';G.hint=false;G.hintUsed=false;renderQ();
+}
+
+function endSession(){
+  const answered = G.done ? G.idx+1 : G.idx;
+  const sMax = G.partId===4 ? answered*2 : answered;
+  const pct = sMax>0 ? Math.round((G.score/sMax)*100) : 0;
+  const k='p'+G.partId, prev=G.bests[k]||0;
+  if(pct>prev){G.bests[k]=pct;lsSet('c1bests',G.bests);}
+  // Update persistent question bank
+  G.results.forEach(function(r){
+    if(r.skipped) return;
+    var q=G.qs[r.idx];
+    if(!q) return;
+    if(!r.correct){
+      // Wrong — add/keep in bank as wrong
+      BANK[q.id]={wrong:true,hint:r.hint,partId:G.partId};
+    } else if(r.hint){
+      // Correct but needed hint — add to bank unless already marked wrong
+      if(!BANK[q.id]||!BANK[q.id].wrong){
+        BANK[q.id]={wrong:false,hint:true,partId:G.partId};
+      }
+    } else {
+      // Correct without hint — remove from bank entirely
+      delete BANK[q.id];
+    }
+  });
+  lsSet('c1bank',BANK);
+  updateBankBtn();
+  showResults();
+}
+
+function showResults(){
+  const p=PARTS.find(x=>x.id===G.partId), c=`var(${p.c})`;
+  const answered=G.done?G.idx+1:G.idx;
+  const sMax=G.partId===4?answered*2:answered;
+  const pct=sMax>0?Math.round((G.score/sMax)*100):0;
+  const [grd,gc]=pct>=80?['Excellent','var(--green)']:pct>=60?['Good','var(--amber)']:['Keep Practising','var(--red)'];
+
+  document.getElementById('rtag').style.color=c;
+  document.getElementById('rtag').textContent=p.label+' \u00b7 '+answered+' question'+(answered!==1?'s':'');
+
+  document.getElementById('rcrd').innerHTML=`<div class="rscore">${G.score}/${sMax}</div>
+    <div class="rpct">${pct}%</div>
+    <div class="rgrade" style="color:${gc};background:rgba(128,128,128,.1);border:1px solid rgba(128,128,128,.2)">${grd}</div>
+    ${G.partId===4?'<div class="rnote">2 marks per question</div>':''}`;
+
+  // Best score
+  const best=G.bests['p'+G.partId];
+  const isNew=best===pct&&pct>0;
+  const rb=document.getElementById('rbest');
+  rb.style.color=isNew?c:'var(--dimmer)';
+  const hintCount=G.results.filter(r=>r.hint&&!r.skipped).length;
+  let bestTxt=best!=null?(isNew?'\uD83C\uDF89 New personal best!':'Personal best: '+best+'%'):'';
+  if(hintCount>0) bestTxt+=(bestTxt?' \u00b7 ':'')+hintCount+' hint'+(hintCount!==1?'s':'')+' used';
+  if(G.maxStreak>1) bestTxt+=(bestTxt?' \u00b7 ':'')+'\uD83D\uDD25 Best streak: '+G.maxStreak;
+  rb.textContent=bestTxt;
+
+  // Breakdown dots
+  const bd=document.getElementById('rbreakdown');
+  if(G.results.length>0){
+    bd.innerHTML=G.results.map((r,i)=>{
+      const cls=r.skipped?'skip':r.correct?'ok':'bad';
+      const sym=r.skipped?'–':r.correct?'✓':'✗';
+      const hintMark=r.hint&&!r.skipped?' style="opacity:.6;font-style:italic"':'';
+      const title='Q'+(i+1)+(r.hint?' (hint used)':'');
+      return '<div class="rdot '+cls+'" title="'+title+'"'+hintMark+'>'+sym+'</div>';
+    }).join('');
+  } else { bd.innerHTML=''; }
+
+  // Wrong answers review button
+  const wrongQs=G.results.filter(r=>!r.correct);
+  const hintQs=G.results.filter(r=>r.correct&&r.hint&&!r.skipped);
+  const reviewBtn=document.getElementById('rreview');
+  const reviewHintBtn=document.getElementById('rreviewhint');
+  if(wrongQs.length>0){
+    reviewBtn.style.display='block';
+    reviewBtn.style.background=c;
+    reviewBtn.textContent='Review '+wrongQs.length+' Mistake'+(wrongQs.length!==1?'s':'');
+    reviewBtn.onclick=()=>startReview(wrongQs);
+  } else {
+    reviewBtn.style.display='none';
+  }
+  if(hintQs.length>0){
+    reviewHintBtn.style.display='block';
+    reviewHintBtn.style.background='rgba(108,142,191,.2)';
+    reviewHintBtn.style.border='1.5px solid var(--blue)';
+    reviewHintBtn.style.color='var(--blue)';
+    reviewHintBtn.textContent='Revisit '+hintQs.length+' Hint-Assisted';
+    reviewHintBtn.onclick=()=>startReview(hintQs);
+  } else {
+    reviewHintBtn.style.display='none';
+  }
+
+  const btn=document.getElementById('ragain');
+  btn.style.background='transparent';
+  btn.style.border='1.5px solid var(--bd)';
+  btn.style.color='var(--tx)';
+  btn.style.fontWeight='400';
+  btn.style.fontSize='.94rem';
+  btn.onclick=()=>startSession(G.partId,G.qs.length);
+
+  show('s-results');
+}
+
+function startReview(wrongResults){
+  // Re-run only the wrong questions from the last session
+  const wrongQs=wrongResults.map(r=>G.qs[r.idx]);
+  G.qs=wrongQs;
+  G.idx=0; G.score=0; G.done=false; G.val=''; G.hint=false; G.hintUsed=false; G.results=[]; G.streak=0; G.maxStreak=0; G.bankMode=false;
+  renderQ(); show('s-question');
+}
+
+
+function confirmStop(){
+  if(G.idx===0 && !G.done){
+    // Haven't answered anything yet — just go back quietly
+    show('s-setup'); return;
+  }
+  // Show inline confirm inside the top bar rather than a browser dialog
+  const bar=document.getElementById('qbot');
+  if(document.getElementById('stop-confirm')) return; // already showing
+  const p=PARTS.find(x=>x.id===G.partId), c=`var(${p.c})`;
+  bar.insertAdjacentHTML('afterbegin',
+    `<div id="stop-confirm" style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;background:rgba(251,113,133,.08);border:1px solid rgba(251,113,133,.25);border-radius:10px;padding:12px 14px">
+      <span style="font-size:.85rem;color:var(--dim)">Stop and see results so far?</span>
+      <div style="display:flex;gap:8px">
+        <button onclick="document.getElementById('stop-confirm').remove()" style="background:transparent;border:1px solid var(--bd);color:var(--dim);border-radius:8px;padding:6px 14px;font-size:.82rem;cursor:pointer">Keep going</button>
+        <button onclick="endSession()" style="background:var(--red);border:none;color:#0d0f1a;border-radius:8px;padding:6px 14px;font-size:.82rem;font-weight:700;cursor:pointer">Stop</button>
+      </div>
+    </div>`
+  );
+}
+
+function doSkip(){
+  if(G.done) return;
+  const q=G.qs[G.idx];
+  G.done=true;
+  G.streak=0;
+  G.results.push({idx:G.idx,correct:false,skipped:true});
+  // Show the correct answer
+  const canonAns=q.accept?q.accept[0]:(q.a?q.a.split('/')[0]:'');
+  const gap=document.getElementById('gap');
+  if(gap){gap.textContent=canonAns;gap.style.color='var(--green)';gap.style.borderColor='var(--green)';}
+  const tg=document.getElementById('tgap');
+  if(tg){tg.textContent=canonAns;tg.style.borderColor='var(--green)';tg.style.color='var(--green)';}
+  const inp=document.getElementById('tin');
+  if(inp){inp.readOnly=true;inp.style.borderColor='var(--bd)';}
+  let fb='<div class="fb bad"><div class="fbm bad">&#8212; Skipped</div><div class="fbs">Answer: '+esc(canonAns)+'</div></div>';
+  if(G.partId===4) fb+='<div class="mbox"><div class="mlbl">MARKING POINTS</div><div class="mrow">&#9312; '+esc(q.p1)+'<br>&#9313; '+esc(q.p2)+'</div></div>';
+  const ha=document.querySelector('.harea');
+  if(ha) ha.insertAdjacentHTML('beforebegin',fb);
+  G.hint=true; G.hintUsed=true;
+  const hb=document.getElementById('hbox'),hbtn=document.getElementById('hbtn');
+  if(hb) hb.style.display='block';
+  if(hbtn) hbtn.textContent='Hide hint';
+  renderBot();
+}
+
+// Theme
+var isLight = lsGet('c1theme', false);
+function showBankMenu(){
+  var wrongCount=Object.values(BANK).filter(function(e){return e.wrong;}).length;
+  var hintCount=Object.values(BANK).filter(function(e){return !e.wrong&&e.hint;}).length;
+  var total=wrongCount+hintCount;
+  // Build a simple overlay menu
+  var existing=document.getElementById('bank-menu');
+  if(existing){ existing.remove(); return; }
+  var menu=document.createElement('div');
+  menu.id='bank-menu';
+  menu.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:flex;align-items:flex-end;justify-content:center;padding-bottom:32px';
+  var inner='<div style="background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:24px 20px;width:min(440px,92vw);display:flex;flex-direction:column;gap:10px">'
+    +'<div style="font-size:10px;color:var(--blue);letter-spacing:.1em;margin-bottom:6px">REVIEW BANK — '+total+' question'+(total!==1?'s':'')+' saved</div>';
+  var bsBase='border-radius:10px;padding:14px;font-weight:700;font-size:.95rem;cursor:pointer;text-align:left;width:100%';
+  if(total>0) inner+='<button data-action="all" style="background:var(--blue);color:#fff;border:none;'+bsBase+'">Review all '+total+' questions</button>';
+  if(wrongCount>0) inner+='<button data-action="wrong" style="background:rgba(251,113,133,.12);color:var(--red);border:1.5px solid rgba(251,113,133,.3);'+bsBase+'">Incorrect only — '+wrongCount+'</button>';
+  if(hintCount>0) inner+='<button data-action="hint" style="background:rgba(108,142,191,.1);color:var(--blue);border:1.5px solid rgba(108,142,191,.3);'+bsBase+'">Hint-assisted only — '+hintCount+'</button>';
+  inner+='<button data-action="clear" style="background:transparent;border:1px solid var(--bd);color:var(--dim);border-radius:10px;padding:12px;font-size:.85rem;cursor:pointer;width:100%">Clear bank</button>';
+  inner+='</div>';
+  menu.innerHTML=inner;
+  menu.addEventListener('click',function(e){
+    if(e.target===menu){ menu.remove(); return; }
+    var action=e.target.dataset.action;
+    if(action==='all'){ menu.remove(); startBankReview(); }
+    else if(action==='wrong'){ menu.remove(); startBankReview(function(id){return BANK[id].wrong;}); }
+    else if(action==='hint'){ menu.remove(); startBankReview(function(id){return !BANK[id].wrong&&BANK[id].hint;}); }
+    else if(action==='clear'){
+      if(confirm('Clear the review bank?')){
+        Object.keys(BANK).forEach(function(k){delete BANK[k];});
+        lsSet('c1bank',BANK); updateBankBtn(); menu.remove();
+      }
+    }
+  });
+  document.body.appendChild(menu);
+}
+
+function applyTheme(){
+  document.body.classList.toggle('light', isLight);
+  var tb = document.getElementById('theme-toggle');
+  if(tb) tb.textContent = isLight ? '\u263D' : '\u2600';
+}
+function toggleTheme(){
+  isLight = !isLight;
+  lsSet('c1theme', isLight);
+  applyTheme();
+}
+applyTheme();
+
+buildHome();
+</script>
+<div class="footer">An app by Ross Lawrence</div>
+<div class="footer">An app by Ross Lawrence</div>
+</body>
+</html
+
+
+
+>
